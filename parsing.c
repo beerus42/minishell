@@ -1,28 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
+/*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: liton <livbrandon@outlook.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/04/04 20:05:12 by liton             #+#    #+#             */
-/*   Updated: 2017/07/27 20:48:10 by liton            ###   ########.fr       */
+/*   Created: 2017/07/27 16:45:17 by liton             #+#    #+#             */
+/*   Updated: 2017/07/27 21:48:35 by liton            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINISHELL_H
-# define MINISHELL_H
+#include "minishell.h"
 
-#include <unistd.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <sys/wait.h>
-#include "./libft/libft.h"
+int			parsing(char *cmd, char ***cmd_split)
+{
+	static const char		*b[6] = {"env", "cd", 
+									"echo", "unsetenv", 
+									"setenv", "exit"};
+	int						i;
+	int		j;
 
-char		*read_cmd(void);
-int			parsing(char *cmd, char ***cmd_split);
-void		command_not_found(char *error);
-void		ft_builtins(char **cmd, char **env);
-void		command_env(char **cmdd, char **env);
-
-#endif
+	j = 0;
+	if (!cmd[0])
+		return (0);
+	*cmd_split = ft_strsplit(cmd, ' ');
+	i = -1;
+	while (++i < 6)
+	{
+		if (ft_strcmp((*cmd_split)[0], b[i]) == 0)
+			return (1);
+	}
+	return (0);
+}

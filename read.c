@@ -1,28 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
+/*   read.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: liton <livbrandon@outlook.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/04/04 20:05:12 by liton             #+#    #+#             */
-/*   Updated: 2017/07/27 20:48:10 by liton            ###   ########.fr       */
+/*   Created: 2017/07/27 16:16:23 by liton             #+#    #+#             */
+/*   Updated: 2017/07/27 19:55:36 by liton            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINISHELL_H
-# define MINISHELL_H
+#include "minishell.h"
 
-#include <unistd.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <sys/wait.h>
-#include "./libft/libft.h"
+char		*read_cmd(void)
+{
+	char	buf[5 + 1];
+	char	*save;
+	int		ret;
+	int		quit;
 
-char		*read_cmd(void);
-int			parsing(char *cmd, char ***cmd_split);
-void		command_not_found(char *error);
-void		ft_builtins(char **cmd, char **env);
-void		command_env(char **cmdd, char **env);
-
-#endif
+	quit = 1;
+	save = ft_strnew(0);
+	ft_putstr_fd("$> ", 0);
+	while (quit && (ret = read(0, buf, 5)) > 0)
+	{
+		buf[ret] = '\0';
+		if (ft_strchr(buf, '\n'))
+		{
+			buf[ret - 1] = '\0';
+			quit = 0;
+		}
+		save = ft_strjoinfree(save, buf, 0);
+	}
+	return (save);
+}

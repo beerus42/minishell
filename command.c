@@ -1,28 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
+/*   command.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: liton <livbrandon@outlook.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/04/04 20:05:12 by liton             #+#    #+#             */
-/*   Updated: 2017/07/27 20:48:10 by liton            ###   ########.fr       */
+/*   Created: 2017/07/27 20:47:18 by liton             #+#    #+#             */
+/*   Updated: 2017/07/28 00:55:41 by liton            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINISHELL_H
-# define MINISHELL_H
+#include "minishell.h"
 
-#include <unistd.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <sys/wait.h>
-#include "./libft/libft.h"
+void		command_env(char **cmd, char **env)
+{
+	if (!cmd)
+		return ; 
+	if (cmd[1] == NULL)
+		ft_display_tab(env);
+}
 
-char		*read_cmd(void);
-int			parsing(char *cmd, char ***cmd_split);
-void		command_not_found(char *error);
-void		ft_builtins(char **cmd, char **env);
-void		command_env(char **cmdd, char **env);
+void		command_cd(char **cmd, char **env)
+{
 
-#endif
+}

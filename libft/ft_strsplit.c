@@ -6,7 +6,7 @@
 /*   By: liton <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/08 14:57:03 by liton             #+#    #+#             */
-/*   Updated: 2016/11/10 20:47:59 by liton            ###   ########.fr       */
+/*   Updated: 2017/07/27 19:39:55 by liton            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,6 @@ static char			*place_word(char *tmp, char const *s, int begin, int lenght)
 		begin++;
 		i++;
 	}
-	tmp[i] = '\0';
 	return (tmp);
 }
 

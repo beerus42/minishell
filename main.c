@@ -6,31 +6,32 @@
 /*   By: liton <livbrandon@outlook.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/04 19:56:19 by liton             #+#    #+#             */
-/*   Updated: 2017/04/05 00:08:17 by liton            ###   ########.fr       */
+/*   Updated: 2017/07/27 22:52:13 by liton            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int		main(int ac, char **av)
+int		main(int ac, char **av, char **env)
 {
-	char	buf[6 + 1];
-	char	*save;
-	char	ls[3] = "ls";
-	int		ret;
+	char		**cmd_split;
+	char		*cmd;
 
-	(void)ac;
 	(void)av;
-	save = ft_strnew(0);
-	ft_putstr_fd("$> ", 0);
-	while ((ret = read(0, buf, 6)) > 0)
+	cmd_split = NULL;
+	if (ac != 1)
+		return (0);
+	while (42)
 	{
-		buf[ret] = '\0';
-		save = ft_strjoinfree(save, buf, 0);
-		if (ft_strchr(save, '\n'))
-			break ;
+		cmd = ft_strdup(read_cmd());
+		if (cmd_split)
+			ft_strclr(cmd_split[0]);
+		if (!(parsing(cmd, &cmd_split)) && cmd_split)
+		{
+			
+			command_not_found(cmd_split[0]);
+			continue ;
+		}
+		ft_builtins(cmd_split, env);
 	}
-	save = ft_strdup("ls");
-	if (!ft_strcmp(save, ls))
-		execve("/bin/ls", av, NULL);
 }

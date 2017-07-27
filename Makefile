@@ -6,7 +6,7 @@
 #    By: liton <marvin@42.fr>                       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/01/09 15:35:38 by liton             #+#    #+#              #
-#*   Updated: 2017/04/04 20:06:57 by liton            ###   ########.fr       *#
+#*   Updated: 2017/07/27 20:47:54 by liton            ###   ########.fr       *#
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,7 +18,12 @@ NAME_H = minishell.a
 
 CFLAGS = -Wall -Wextra -Werror
 
-SRC_NAME = main.c 
+SRC_NAME = 	read.c \
+			parsing.c \
+			error_msg.c \
+			ft_builtins.c \
+		    command.c \
+			main.c 
 
 OBJ_DIR = obj
 
