@@ -6,7 +6,7 @@
 #    By: liton <marvin@42.fr>                       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/01/09 15:35:38 by liton             #+#    #+#              #
-#*   Updated: 2017/07/27 20:47:54 by liton            ###   ########.fr       *#
+#*   Updated: 2017/07/31 22:29:05 by liton            ###   ########.fr       *#
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,6 +23,7 @@ SRC_NAME = 	read.c \
 			error_msg.c \
 			ft_builtins.c \
 		    command.c \
+		    free.c \
 			main.c 
 
 OBJ_DIR = obj

@@ -6,7 +6,7 @@
 /*   By: liton <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/08 14:47:40 by liton             #+#    #+#             */
-/*   Updated: 2016/11/08 17:58:01 by liton            ###   ########.fr       */
+/*   Updated: 2017/07/31 22:07:00 by liton            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@ char	*ft_strdup(const char *s)
 	int		i;
 
 	i = -1;
+	if (!s)
+		return (NULL);
 	if (!(string_dup = (char*)malloc(sizeof(char) * (ft_strlen(s) + 1))))
 		return (NULL);
 	while (s[++i])
