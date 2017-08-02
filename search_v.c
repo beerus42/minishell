@@ -1,35 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   command.c                                          :+:      :+:    :+:   */
+/*   search_v.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: liton <livbrandon@outlook.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/07/27 20:47:18 by liton             #+#    #+#             */
-/*   Updated: 2017/08/02 00:07:26 by liton            ###   ########.fr       */
+/*   Created: 2017/08/01 23:19:37 by liton             #+#    #+#             */
+/*   Updated: 2017/08/02 01:11:14 by liton            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void		command_env(char **env, char *cmd, char *builtins)
+int		search_v(char **env, char *str)
 {
-	if (ft_strcmp(cmd, builtins) == 0)
-		ft_display_tab(env);
-}
+	int		i;
 
-void		command_ls(char **env, char *cmd, char *builtins)
-{
-	pid_t	pid;
-	char	**av;
-
-	pid = fork();
-	(void)builtins;
-	if (pid > 0)
-		wait(NULL);
-	else
+	i = -1;
+	while (env[++i])
 	{
-		av = ft_strsplit(cmd, ' ');
-		execve("/bin/ls", av, env);
+		 while (env[i] && env[i][0] != str[0])
+			++i;
+		if (ft_strstr(env[i], str))
+			return (i);
 	}
+	return (-1);
 }

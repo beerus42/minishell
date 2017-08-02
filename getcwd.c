@@ -1,35 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   command.c                                          :+:      :+:    :+:   */
+/*   getcwd.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: liton <livbrandon@outlook.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/07/27 20:47:18 by liton             #+#    #+#             */
-/*   Updated: 2017/08/02 00:07:26 by liton            ###   ########.fr       */
+/*   Created: 2017/08/01 22:41:14 by liton             #+#    #+#             */
+/*   Updated: 2017/08/01 23:18:06 by liton            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void		command_env(char **env, char *cmd, char *builtins)
+char	*ft_getcwd(int size)
 {
-	if (ft_strcmp(cmd, builtins) == 0)
-		ft_display_tab(env);
-}
+	char	*str;
+	char	buff[size + 1];
 
-void		command_ls(char **env, char *cmd, char *builtins)
-{
-	pid_t	pid;
-	char	**av;
-
-	pid = fork();
-	(void)builtins;
-	if (pid > 0)
-		wait(NULL);
-	else
-	{
-		av = ft_strsplit(cmd, ' ');
-		execve("/bin/ls", av, env);
-	}
+	str = getcwd((char*)buff, size);
+//	printf("strr = %s\n", str);
+	printf("strr = %s\n", str);
+	return (str);
 }
