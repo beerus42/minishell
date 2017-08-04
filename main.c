@@ -6,7 +6,7 @@
 /*   By: liton <livbrandon@outlook.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/04 19:56:19 by liton             #+#    #+#             */
-/*   Updated: 2017/08/01 23:49:42 by liton            ###   ########.fr       */
+/*   Updated: 2017/08/02 19:29:35 by liton            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ char		**strcpy_env(char **envp)
 		return (NULL);
 	while (envp[i])
 		++i;
-	if (!(env = (char**)malloc(sizeof(char*) * i) + 1))
+	if (!(env = (char**)malloc(sizeof(char*) * i) + 2))
 		return (NULL);
 	i = -1;
 	while (envp[++i])
@@ -31,6 +31,7 @@ char		**strcpy_env(char **envp)
 			return (NULL);
 		ft_strcpy(env[i], envp[i]);
 	}
+	env[6] = ft_strdup(envp[6]);
 	env[i] = NULL;
 	return (env);
 }
