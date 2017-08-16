@@ -1,27 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strcpy.c                                        :+:      :+:    :+:   */
+/*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: liton <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: liton <livbrandon@outlook.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2016/11/08 14:46:40 by liton             #+#    #+#             */
-/*   Updated: 2017/08/13 23:24:29 by liton            ###   ########.fr       */
+/*   Created: 2017/07/31 22:28:22 by liton             #+#    #+#             */
+/*   Updated: 2017/08/15 22:17:46 by liton            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "minishell.h"
 
-char	*ft_strcpy(char *dest, const char *src)
+void	free_env(char **env)
 {
 	int		i;
 
 	i = 0;
-	while (src[i])
+	while (env[i])
 	{
-		dest[i] = src[i];
-		i++;
+		free(env[i]);
+		++i;
 	}
-	dest[i] = '\0';
-	return (dest);
+}
+
+void	free_string(char **str)
+{
+	free(*str);
+	*str = NULL;
 }

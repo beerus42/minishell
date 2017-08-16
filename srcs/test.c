@@ -1,27 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strcpy.c                                        :+:      :+:    :+:   */
+/*   test.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: liton <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: liton <livbrandon@outlook.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2016/11/08 14:46:40 by liton             #+#    #+#             */
-/*   Updated: 2017/08/13 23:24:29 by liton            ###   ########.fr       */
+/*   Created: 2017/08/01 19:51:33 by liton             #+#    #+#             */
+/*   Updated: 2017/08/01 20:04:59 by liton            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "minishell.h"
 
-char	*ft_strcpy(char *dest, const char *src)
+int		main(int ac, char **av, char **env)
 {
-	int		i;
-
-	i = 0;
-	while (src[i])
-	{
-		dest[i] = src[i];
-		i++;
-	}
-	dest[i] = '\0';
-	return (dest);
+	execve("/bin/cd", av, env);
 }

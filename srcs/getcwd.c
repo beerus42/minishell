@@ -1,27 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strcpy.c                                        :+:      :+:    :+:   */
+/*   getcwd.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: liton <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: liton <livbrandon@outlook.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2016/11/08 14:46:40 by liton             #+#    #+#             */
-/*   Updated: 2017/08/13 23:24:29 by liton            ###   ########.fr       */
+/*   Created: 2017/08/01 22:41:14 by liton             #+#    #+#             */
+/*   Updated: 2017/08/16 04:34:01 by liton            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "minishell.h"
 
-char	*ft_strcpy(char *dest, const char *src)
+char	*ft_getcwd(int size)
 {
-	int		i;
+	char	*str;
+	char	buff[size + 1];
 
-	i = 0;
-	while (src[i])
-	{
-		dest[i] = src[i];
-		i++;
-	}
-	dest[i] = '\0';
-	return (dest);
+	str = getcwd((char*)buff, size);
+	return (str);
 }

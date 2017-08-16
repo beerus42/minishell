@@ -5,57 +5,70 @@
 #                                                     +:+ +:+         +:+      #
 #    By: liton <marvin@42.fr>                       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2017/01/09 15:35:38 by liton             #+#    #+#              #
-#*   Updated: 2017/08/01 23:44:11 by liton            ###   ########.fr       *#
+#    Created: 2017/08/14 20:24:52 by liton             #+#    #+#              #
+#*   Updated: 2017/08/15 23:16:30 by liton            ###   ########.fr       *#
 #                                                                              #
 # **************************************************************************** #
 
-CC = gcc
+NAME    = 	minishell
+CC      = 	gcc
+FLAGS   = 	-Wall -Wextra -Werror
+LIB     = 	libft/libft.a
+HEADER  = 	includes/
+LIBSRC  = 	libft/
+SRCDIR  = 	srcs/
+OBJDIR  = 	objs/
+SRC	=	add_v.c				\
+		binary_cd.c			\
+		command.c			\
+		error_msg.c     	\
+		free.c				\
+		ft_builtins.c		\
+		getcwd.c			\
+		parsing.c			\
+		read.c				\
+		search_v.c			\
+		del_v.c        		\
+		main.c
+# colors
+GRN     =   \033[0;32m
+RED     =   \033[0;31m
+CYN     =   \033[0;36m
+NC      =   \033[0m
+SRCS        = $(addprefix $(SRCDIR), $(SRC))
+OBJS        = $(addprefix $(OBJDIR), $(SRC:.c=.o))
 
-NAME = minishell
+all: $(OBJDIR) $(NAME)
 
-NAME_H = minishell.a
+$(NAME): $(LIB) $(OBJS)
+	@$(CC) $(FLAGS) -L./$(LIBSRC) -lft -o $(NAME) $(OBJS)
+	@echo "\n${CYN}PROCESSING DONE !${NC}"
 
-CFLAGS = -Wall -Wextra -Werror
+$(OBJDIR):
+	@mkdir -p objs
 
-SRC_NAME = 	read.c \
-			parsing.c \
-			error_msg.c \
-			ft_builtins.c \
-		    command.c \
-		    free.c \
-	        getcwd.c \
-		    search_v.c \
-	        binary_cd.c \
-			main.c 
+$(LIB):
+	@echo "${CYN}Processing ${NC}./libft/objs ${CYN}[${NC}...${CYN}]${NC}"
+	@make -C $(LIBSRC)
+	@echo "\n${CYN}Processing ${NC}./objs ${CYN}[${NC}...${CYN}]${NC}"
 
-OBJ_DIR = obj
-
-OBJ = $(SRC_NAME:.c=.o)
-
-all:
-#		@echo "Convesion des sources en objet"
-		$(CC) $(CFLAGS) -c $(SRC_NAME)
-#		@echo "Links des objets"
-		ar rc $(NAME_H) $(OBJ)
-#		@echo "Indexation de la librairie"
-		ranlib $(NAME_H)
-		$(CC) $(CFLAGS) $(SRC_NAME) libft.a -o $(NAME)
-#		@echo "Creation du dossier objet"
-		mkdir -p $(OBJ_DIR)
-#		@echo "Les objets sont deplace dans le dossier objet"
-		mv $(OBJ) $(OBJ_DIR)
+$(OBJDIR)%.o: $(SRCDIR)%.c $(HEADER)$(NAME).h
+	@echo "${GRN}Compiling${NC} $@"
+	@$(CC) $(FLAGS) -c -o $@ $< -I $(HEADER)
 
 clean:
-#		@echo "Supression des objets"
-		rm -f $(OBJ)
-		rm -rf $(OBJ_DIR)
+	@echo "${RED}Cleaning ${NC}./objs/ ${RED}[${NC}...${RED}]${NC}"
+	@rm -rf $(OBJS)
+	@echo "${RED}Cleaning ${NC}./libft/objs/ ${RED}[${NC}...${RED}]${NC}"
+	@make -C $(LIBSRC) clean
 
 fclean: clean
-#		@echo "Supression de l'executable et de la librairie"
-		rm -f $(NAME)
-		rm -f $(NAME_H)
+	@echo "${RED}Cleaning ${NC}./${RED}ft_ls${NC}"
+	@rm -Rf $(NAME)
+	@echo "${RED}Cleaning ${NC}./libft/${RED}libft.h${NC}\n"
+	@make -C $(LIBSRC) fclean
+	@echo "${RED}DELET DONE !${NC}"
 
 re: fclean all
 
-.PHONY: clean fclean re
+.PHONY: all clean fclean re
