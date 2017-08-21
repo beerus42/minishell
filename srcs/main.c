@@ -6,7 +6,7 @@
 /*   By: liton <livbrandon@outlook.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/04 19:56:19 by liton             #+#    #+#             */
-/*   Updated: 2017/08/16 03:26:29 by liton            ###   ########.fr       */
+/*   Updated: 2017/08/21 01:24:46 by liton            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,39 @@ char		**strcpy_env(char **envp)
 	return (env);
 }
 
+void			exec_command(char **env, char *cmd)
+{
+	char		**av;
+	int			i;
+	pid_t		pid;
+	char		**env_path;
+	char		*path;
+
+	pid = fork();
+	if ((i = search_v(env, "PATH")) == -1)
+		return ;
+	if (pid > 0)
+		wait(NULL);
+	else
+	{
+		path = ft_strdup("/");
+		av = ft_strsplit(cmd, ' ');
+		env_path = ft_strsplit(env[i] + 5, ':');
+		i = 0;
+		while (env_path[i])
+		{
+			path = ft_strjoinfree(env_path[i], path, 1);
+			path = ft_strjoinfree(path, av[0], 1);
+			execve(path, av, env);
+			free(path);
+			path = ft_strdup("/");
+			++i;
+		}
+		command_not_found(av[0]);
+		free(path);
+	}
+}
+
 int				main(int ac, char **av, char **envp)
 {
 	char		**env;
@@ -42,16 +75,14 @@ int				main(int ac, char **av, char **envp)
 	{
 		cmd = ft_strdup(read_cmd());
 		builtins = ft_strdup(parsing(cmd));
-		if (builtins == NULL)
-		{
-			command_not_found(cmd);
-			continue ;
-		}
-		else
+		if (builtins != NULL)
 		{
 			ft_builtins(&env, cmd, builtins);
 			free(cmd);
 			free(builtins);
+			exec_command(env, cmd);
 		}
+		else
+			exec_command(env, cmd);
 	}
 }

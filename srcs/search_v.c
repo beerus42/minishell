@@ -6,13 +6,13 @@
 /*   By: liton <livbrandon@outlook.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/01 23:19:37 by liton             #+#    #+#             */
-/*   Updated: 2017/08/16 05:16:26 by liton            ###   ########.fr       */
+/*   Updated: 2017/08/20 02:09:43 by liton            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int		search_v(char **env, char *str, int *place)
+int		search_v(char **env, char *str)
 {
 	int		i;
 	int		j;
@@ -34,9 +34,8 @@ int		search_v(char **env, char *str, int *place)
 			++k;
 		while (env[j][k] == str[i])
 		{
-			*place = j;
 			if (k == 0 && i == 0)
-				return (0);
+				return (j);
 			--k;
 			--i;
 		}

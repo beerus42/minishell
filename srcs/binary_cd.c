@@ -6,7 +6,7 @@
 /*   By: liton <livbrandon@outlook.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/01 23:43:56 by liton             #+#    #+#             */
-/*   Updated: 2017/08/16 05:44:21 by liton            ###   ########.fr       */
+/*   Updated: 2017/08/21 01:27:56 by liton            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ static void		modify_env(char ***env, char *dir)
 	char	**new_env;
 
 	p = 0;
-	if (search_v(*env, "OLDPWD", &p) == 0)
+	if ((p = search_v(*env, "OLDPWD")) != -1)
 		modify_v(*env, p, "OLDPWD", dir);
 	else
 	{
@@ -41,7 +41,7 @@ static void		modify_env(char ***env, char *dir)
 		*env = new_env;
 	}
 	p = 0;
-	if (search_v(*env, "PWD", &p) == 0)
+	if ((p = search_v(*env, "PWD")) != -1)
 		modify_v(*env, p, "PWD", getcwd(dir, 100));
 	else
 	{
@@ -56,14 +56,20 @@ void			binary_cd(char ***env, char *cmd)
 	char	*dir;
 	char	*path;
 
-	av = ft_strsplit(cmd, ' ');
 	dir = NULL;
+	av = ft_strsplit(cmd, ' ');
+	dir = getcwd(dir, 100);
+	path = ft_strnew(0);
 	if (support_cd(av) == -1)
 		return ;
-	path = ft_strdup("/");
-	dir = getcwd(dir, 100);
-	path = ft_strjoinfree(dir, path, 2);
-	path = ft_strjoinfree(path, av[1], 1);
+	if (av[1] && av[1][0] != '/')
+	{
+		path = ft_strdup("/");
+		path = ft_strjoinfree(dir, path, 2);
+		path = ft_strjoinfree(path, av[1], 1);
+	}
+	else
+		path = ft_strjoinfree(path, av[1], 1);
 	if (chdir(path))
 	{
 		error_msg("cd: no such file or directory", av[1]);

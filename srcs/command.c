@@ -6,7 +6,7 @@
 /*   By: liton <livbrandon@outlook.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/27 20:47:18 by liton             #+#    #+#             */
-/*   Updated: 2017/08/16 03:40:45 by liton            ###   ########.fr       */
+/*   Updated: 2017/08/21 01:25:01 by liton            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	command_setenv(char ***env, char *cmd, char *builtins)
 	new_env = NULL;
 	if (!*env || !av[1])
 		return ;
-		if (search_v(*env, av[1], &p))
+	if ((p = search_v(*env, av[1])) == -1)
 	{
 		if (av[2])
 			new_env = add_v(*env, av[1], av[2]);
@@ -45,8 +45,13 @@ void	command_unsetenv(char ***env, char *cmd, char *builtins)
 	(void)builtins;
 	p = 0;
 	av = ft_strsplit(cmd, ' ');
-	if (!*env || !av[1] || search_v(*env, av[1], &p))
+	if (av[2])
+	{
+		ft_putendl_fd("unsetenv: too few arguments", 2);
 		return ;
+	}
+	if (!*env || !av[1] || (p = search_v(*env, av[1])) == -1)
+		return ;	
 	new_env = del_v(*env, p);
 	*env = new_env;
 }

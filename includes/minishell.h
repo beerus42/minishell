@@ -6,7 +6,7 @@
 /*   By: liton <livbrandon@outlook.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/04 20:05:12 by liton             #+#    #+#             */
-/*   Updated: 2017/08/16 04:53:12 by liton            ###   ########.fr       */
+/*   Updated: 2017/08/20 02:00:55 by liton            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void			free_string(char **str);
 void			binary_cd(char ***env, char *cmd);
 void			command_ls(char **env, char *cmd, char *builtins);
 char			*ft_getcwd(int size);
-int				search_v(char **env, char *str, int *p);
+int				search_v(char **env, char *str);
 char			**add_v(char **env, char *variable, char *value);
 int				size_env(char **env);
 void			free_env(char **env);
