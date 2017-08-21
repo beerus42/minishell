@@ -6,7 +6,7 @@
 /*   By: liton <livbrandon@outlook.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/01 23:43:56 by liton             #+#    #+#             */
-/*   Updated: 2017/08/21 01:27:56 by liton            ###   ########.fr       */
+/*   Updated: 2017/08/21 03:32:43 by liton            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,6 @@ static void		modify_env(char ***env, char *dir)
 	int		p;
 	char	**new_env;
 
-	p = 0;
 	if ((p = search_v(*env, "OLDPWD")) != -1)
 		modify_v(*env, p, "OLDPWD", dir);
 	else
@@ -40,7 +39,6 @@ static void		modify_env(char ***env, char *dir)
 		new_env = add_v(*env, "OLDPWD", dir);
 		*env = new_env;
 	}
-	p = 0;
 	if ((p = search_v(*env, "PWD")) != -1)
 		modify_v(*env, p, "PWD", getcwd(dir, 100));
 	else
@@ -64,11 +62,12 @@ void			binary_cd(char ***env, char *cmd)
 		return ;
 	if (av[1] && av[1][0] != '/')
 	{
+		free(path);
 		path = ft_strdup("/");
 		path = ft_strjoinfree(dir, path, 2);
 		path = ft_strjoinfree(path, av[1], 1);
 	}
-	else
+	else if (av[1][0] == '/')
 		path = ft_strjoinfree(path, av[1], 1);
 	if (chdir(path))
 	{

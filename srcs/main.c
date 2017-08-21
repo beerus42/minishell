@@ -6,7 +6,7 @@
 /*   By: liton <livbrandon@outlook.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/04 19:56:19 by liton             #+#    #+#             */
-/*   Updated: 2017/08/21 01:24:46 by liton            ###   ########.fr       */
+/*   Updated: 2017/08/21 05:15:40 by liton            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,6 @@ int				main(int ac, char **av, char **envp)
 			ft_builtins(&env, cmd, builtins);
 			free(cmd);
 			free(builtins);
-			exec_command(env, cmd);
 		}
 		else
 			exec_command(env, cmd);

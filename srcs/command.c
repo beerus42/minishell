@@ -6,7 +6,7 @@
 /*   By: liton <livbrandon@outlook.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/27 20:47:18 by liton             #+#    #+#             */
-/*   Updated: 2017/08/21 01:25:01 by liton            ###   ########.fr       */
+/*   Updated: 2017/08/21 04:47:27 by liton            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,11 +17,14 @@ void	command_setenv(char ***env, char *cmd, char *builtins)
 	char	**new_env;
 	char	**av;
 	int		p;
+	int		overwrite;
 
 	(void)builtins;
 	p = 0;
 	av = ft_strsplit(cmd, ' ');
 	new_env = NULL;
+	if (av[3])
+		overwrite = ft_atoi(av[3]);
 	if (!*env || !av[1])
 		return ;
 	if ((p = search_v(*env, av[1])) == -1)
@@ -32,7 +35,7 @@ void	command_setenv(char ***env, char *cmd, char *builtins)
 			new_env = add_v(*env, av[1], "");
 		*env = new_env;
 	}
-	else if (av[2] && av[3] && ft_strcmp(av[3], "0"))
+	else if (av[2] && av[3] && overwrite != 0)
 		modify_v(*env, p, av[1], av[2]);
 }
 
