@@ -6,7 +6,7 @@
 /*   By: liton <livbrandon@outlook.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/04 20:05:12 by liton             #+#    #+#             */
-/*   Updated: 2017/08/20 02:00:55 by liton            ###   ########.fr       */
+/*   Updated: 2017/08/25 02:56:26 by liton            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,20 +21,17 @@
 #include <dirent.h>
 #include "../libft/libft.h"
 
-char			*read_cmd(void);
 const char		*parsing(char *cmd);
 void			command_not_found(char *error);
 void			ft_builtins(char ***env, char *cmd, char *builtins);
 void			command_env(char **env, char *cmd, char *builtins);
 void			free_string(char **str);
 void			binary_cd(char ***env, char *cmd);
-void			command_ls(char **env, char *cmd, char *builtins);
 char			*ft_getcwd(int size);
 int				search_v(char **env, char *str);
 char			**add_v(char **env, char *variable, char *value);
 int				size_env(char **env);
 void			free_env(char **env);
-char			**del_v(char **env, int place);
 void			command_unsetenv(char ***env, char *cmd, char *builtins);
 void			command_setenv(char ***env, char *cmd, char *builtins);
 void			modify_v(char **env, int p, char *var, char *val);

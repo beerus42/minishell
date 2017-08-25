@@ -6,13 +6,13 @@
 /*   By: liton <livbrandon@outlook.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/04 19:56:19 by liton             #+#    #+#             */
-/*   Updated: 2017/08/21 05:51:54 by liton            ###   ########.fr       */
+/*   Updated: 2017/08/25 03:03:15 by liton            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char		**strcpy_env(char **envp)
+static char		**strcpy_env(char **envp)
 {
 	char	**env;
 	int		i;
@@ -36,11 +36,10 @@ void			exec_command(char ***env, char *cmd)
 	char		**env_path;
 	char		*path;
 
-	
 	if ((i = search_v(*env, "PATH")) == -1)
 	{
-		*env = add_v(*env, "PATH", "/Users/beerus/.rbenv/plugins/ruby-build/bin:/Users/beerus/.rbenv/shims:/Users/beerus/.rbenv/bin:/Users/beerus/.rvm/gems/ruby-2.4.1/bin:/Users/beerus/.rvm/gems/ruby-2.4.1@global/bin:/Users/beerus/.rvm/rubies/ruby-2.4.1/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/Users/beerus/.rvm/bin");	
-		i = size_env(*env) - 1;
+		ft_putstr_fd("Variable PATH not set.\n", 2);
+		return ;
 	}
 	pid = fork();
 	if (pid > 0)
@@ -65,27 +64,55 @@ void			exec_command(char ***env, char *cmd)
 	}
 }
 
+char		*read_cmd(void)
+{
+	char	buf[5 + 1];
+	char	*save;
+	int		ret;
+	int		quit;
+
+	quit = 1;
+	save = ft_strnew(0);
+	ft_putstr_fd("$> ", 0);
+	while (quit && (ret = read(0, buf, 5)) > 0)
+	{
+		buf[ret] = '\0';
+		if (ft_strchr(buf, '\n'))
+		{
+			buf[ret - 1] = '\0';
+			quit = 0;
+		}
+		save = ft_strjoinfree(save, buf, 1);
+	}
+	return (save);
+}
+
 int				main(int ac, char **av, char **envp)
 {
 	char		**env;
 	char		*builtins;
 	char		*cmd;
 
+	cmd = NULL;
+	builtins = NULL;
 	(void)av;
 	if (ac != 1)
 		return (0);
 	env = strcpy_env(envp);
 	while (42)
 	{
+		ft_strdel(&cmd);
+		ft_strdel(&builtins);
 		cmd = ft_strdup(read_cmd());
 		builtins = ft_strdup(parsing(cmd));
 		if (builtins != NULL)
 		{
+			printf("DDD\n");
 			ft_builtins(&env, cmd, builtins);
-			free(cmd);
-			free(builtins);
+			ft_strdel(&cmd);
+			ft_strdel(&builtins);
 		}
-		else
+		else if (cmd)
 			exec_command(&env, cmd);
 	}
 }

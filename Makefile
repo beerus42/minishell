@@ -6,7 +6,7 @@
 #    By: liton <marvin@42.fr>                       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/08/14 20:24:52 by liton             #+#    #+#              #
-#*   Updated: 2017/08/21 03:36:06 by liton            ###   ########.fr       *#
+#*   Updated: 2017/08/25 00:58:02 by liton            ###   ########.fr       *#
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,9 +26,7 @@ SRC	=	add_v.c				\
 		ft_builtins.c		\
 		getcwd.c			\
 		parsing.c			\
-		read.c				\
 		search_v.c			\
-		del_v.c        		\
 		main.c
 # colors
 GRN     =   \033[0;32m

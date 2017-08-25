@@ -6,13 +6,13 @@
 /*   By: liton <livbrandon@outlook.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/27 20:47:18 by liton             #+#    #+#             */
-/*   Updated: 2017/08/21 05:36:53 by liton            ###   ########.fr       */
+/*   Updated: 2017/08/25 02:47:43 by liton            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	command_setenv(char ***env, char *cmd, char *builtins)
+void			command_setenv(char ***env, char *cmd, char *builtins)
 {
 	char	**new_env;
 	char	**av;
@@ -39,7 +39,33 @@ void	command_setenv(char ***env, char *cmd, char *builtins)
 		modify_v(*env, p, av[1], av[2]);
 }
 
-void	command_unsetenv(char ***env, char *cmd, char *builtins)
+static char		**del_v(char **env, int place)
+{
+	char	**new_env;
+	int		i;
+	int		j;
+
+	i = 0;
+	j = 0;
+	if (!(new_env = (char**)malloc(sizeof(char*) * (size_env(env)))))
+		return (NULL);
+	while (env[i])
+	{
+		if (i == place)
+			++i;
+		if	(env[i])
+		{
+			new_env[j] = ft_strdup(env[i]);
+			++i;
+			++j;
+		}
+	}
+	free_env(env);
+	new_env[j] = NULL;
+	return (new_env);
+}
+
+void			command_unsetenv(char ***env, char *cmd, char *builtins)
 {
 	char	**new_env;
 	char	**av;
@@ -59,24 +85,8 @@ void	command_unsetenv(char ***env, char *cmd, char *builtins)
 	*env = new_env;
 }
 
-void		command_env(char **env, char *cmd, char *builtins)
+void			command_env(char **env, char *cmd, char *builtins)
 {
 	if (ft_strcmp(cmd, builtins) == 0)
 		ft_display_tab(env);
-}
-
-void		command_ls(char **env, char *cmd, char *builtins)
-{
-	pid_t	pid;
-	char	**av;
-
-	pid = fork();
-	(void)builtins;
-	if (pid > 0)
-		wait(NULL);
-	else
-	{
-		av = ft_strsplit(cmd, ' ');
-		execve("/bin/ls", av, env);
-	}
 }
