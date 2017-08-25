@@ -6,7 +6,7 @@
 /*   By: liton <livbrandon@outlook.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/01 23:43:56 by liton             #+#    #+#             */
-/*   Updated: 2017/08/25 00:51:37 by liton            ###   ########.fr       */
+/*   Updated: 2017/08/26 01:53:19 by liton            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ static void		modify_env(char ***env, char *dir)
 	int		p;
 	char	**new_env;
 
+	new_env = NULL;
 	if ((p = search_v(*env, "OLDPWD")) != -1)
 		modify_v(*env, p, "OLDPWD", dir);
 	else
@@ -48,6 +49,13 @@ static void		modify_env(char ***env, char *dir)
 	}
 }
 
+static void		free_cd(char **av, char *dir, char *path)
+{
+	free_env(av);
+	ft_strdel(&dir);
+	ft_strdel(&path);
+}
+
 void			binary_cd(char ***env, char *cmd)
 {
 	int		p;
@@ -60,12 +68,26 @@ void			binary_cd(char ***env, char *cmd)
 	dir = getcwd(dir, 100);
 	path = ft_strnew(0);
 	if (support_cd(av) == -1)
+	{
+		free_cd(av, dir, path);
 		return ;
-	if (!ft_strcmp(av[1], "-"))
+	}
+	if (!av[1])
+	{
+		if ((p = search_v(*env, "HOME")) == -1)
+		{
+			ft_putstr_fd("Variable HOME not set.\n", 2);
+			free_cd(av, dir, path);
+			return ;
+		}
+		path = ft_strjoinfree(path, (*env)[p] + 5, 1);
+	}
+	else if (!ft_strcmp(av[1], "-"))
 	{
 		if ((p = search_v(*env, "OLDPWD")) == -1)
 		{
 			ft_putstr_fd("Variable OLDPWD not set.\n", 2);
+			free_cd(av, dir, path);
 			return ;
 		}
 		path = ft_strjoinfree(path, (*env)[p] + 7, 1);
@@ -73,7 +95,7 @@ void			binary_cd(char ***env, char *cmd)
 	}
 	else if (av[1] && av[1][0] != '/')
 	{
-		free(path);
+		ft_strdel(&path);
 		path = ft_strdup("/");
 		path = ft_strjoinfree(dir, path, 2);
 		path = ft_strjoinfree(path, av[1], 1);
@@ -82,8 +104,15 @@ void			binary_cd(char ***env, char *cmd)
 		path = ft_strjoinfree(path, av[1], 1);
 	if (chdir(path))
 	{
-		error_msg("cd: no such file or directory", av[1]);
+		if (access(path, X_OK) == -1)
+			error_msg("cd: permission denied:", av[1]);
+		else
+			error_msg("cd: no such file or directory", av[1]);
+		free_cd(av, dir, path);
 		return ;
 	}
+	ft_strdel(&path);
+	free_env(av);
 	modify_env(env, dir);
+	ft_strdel(&dir);
 }

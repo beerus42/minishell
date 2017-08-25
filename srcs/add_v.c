@@ -6,7 +6,7 @@
 /*   By: liton <livbrandon@outlook.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/14 02:12:47 by liton             #+#    #+#             */
-/*   Updated: 2017/08/25 00:59:18 by liton            ###   ########.fr       */
+/*   Updated: 2017/08/25 04:03:16 by liton            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ void			modify_v(char **env, int p, char *var, char *val)
 	while (val[++j])
 		str[i++] = val[j];
 	str[i] = '\0';
+	ft_strdel(&env[p]);
 	env[p] = ft_strdup(str);
 }
 
@@ -80,5 +81,6 @@ char			**add_v(char **env, char *variable, char *value)
 		return (NULL);
 	cpy_var(new_env, i, variable, value);
 	new_env[i + 1] = NULL;
+	free_env(env);
 	return (new_env);
 }

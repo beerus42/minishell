@@ -6,7 +6,7 @@
 /*   By: liton <livbrandon@outlook.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/27 20:03:45 by liton             #+#    #+#             */
-/*   Updated: 2017/08/21 00:48:50 by liton            ###   ########.fr       */
+/*   Updated: 2017/08/25 04:39:16 by liton            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,6 @@ char		*my_strcpy(int i, char *error)
 	while (++j <= i)
 		str[j] = error[j];
 	str[j] = '\0';
-	free_string(&error);
 	error = str;
 	return (error);
 }
