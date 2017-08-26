@@ -6,35 +6,37 @@
 /*   By: liton <livbrandon@outlook.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/04 19:56:19 by liton             #+#    #+#             */
-/*   Updated: 2017/08/26 01:08:57 by liton            ###   ########.fr       */
+/*   Updated: 2017/08/26 23:43:58 by liton            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static const char		*parsing(char *cmd)
+static char			*parsing(char *cmd)
 {
 	int						i;
-	int						j;
 	int						end;
+	int						k;
+	char					*builtins;
 	static const char		*b[6] = {"env", "cd", "echo", "unsetenv",
 									  "setenv", "exit"};
 
-	i = 0;
+	i = -1;
 	end = 0;
 	if (!cmd[0] || !cmd[1])
 		return (0);
+	while (cmd[end] && cmd[end] == ' ')
+		++end;
+	k = end;
 	while (cmd[end + 1] && cmd[end + 1] != ' ')
 		++end;
-	while (i < 6)
+	builtins = ft_strsub(cmd, k, (end - k) + 1);
+	while (++i < 6)
 	{
-		j = 0;
-		while (cmd[j] == b[i][j] && j <= end)
-			++j;
-		if (j == end + 1 && b[i][j] == '\0')
-			return (b[i]);
-		++i;
+		if (!ft_strcmp(builtins, b[i]))
+			return (builtins);
 	}
+	ft_strdel(&builtins);
 	return (NULL);
 }
 
@@ -71,19 +73,18 @@ void			exec_command(char ***env, char *cmd)
 	pid = fork();
 	if (pid > 0)
 		wait(NULL);
-	else
+	if (pid == 0 && cmd[0] != '/')
 	{
 		av = ft_strsplit(cmd, ' ');
 		env_path = ft_strsplit((*env)[i] + 5, ':');
-		i = 0;
-		while (env_path[i])
+		i = -1;
+		while (env_path[++i])
 		{
 			path = ft_strjoin(env_path[i], path);
 			path = ft_strjoinfree(path, "/", 1);
 			path = ft_strjoinfree(path, av[0], 1);
 			execve(path, av, *env);
 			ft_strdel(&path);
-			++i;
 		}
 		command_not_found(av[0]);
 		ft_strdel(&path);
@@ -129,7 +130,7 @@ int				main(int ac, char **av, char **envp)
 	while (42)
 	{
 		cmd = read_cmd();
-		builtins = ft_strdup(parsing(cmd));
+		builtins = parsing(cmd);
 		if (builtins != NULL)
 		{
 			ft_builtins(&env, cmd, builtins);

@@ -6,7 +6,7 @@
 /*   By: liton <livbrandon@outlook.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/01 23:43:56 by liton             #+#    #+#             */
-/*   Updated: 2017/08/26 04:23:00 by liton            ###   ########.fr       */
+/*   Updated: 2017/08/26 23:38:49 by liton            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,19 +22,8 @@ static void		free_cd(char **av, char *dir, char *path, int bol)
 
 static int		support_cd(char **av, char *dir, char **env, char **path)
 {
-	int		nb_av;
 	int		p;
 
-	nb_av = 0;
-	p = 0;
-	while(av[nb_av])
-		++nb_av;
-	if (nb_av > 2)
-	{
-		error_msg("cd: too few arguments", NULL);
-		free_cd(av, dir, *path, 0);
-		return (-1);
-	}
 	if (!av[1])
 	{
 		if ((p = search_v(env, "HOME")) == -1)
