@@ -6,7 +6,7 @@
 /*   By: liton <livbrandon@outlook.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/04 20:05:12 by liton             #+#    #+#             */
-/*   Updated: 2017/08/26 02:05:38 by liton            ###   ########.fr       */
+/*   Updated: 2017/08/28 01:54:11 by liton            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,15 +20,15 @@
 #include <sys/types.h>
 #include <signal.h>
 #include <dirent.h>
+#include <sys/stat.h>
 #include "../libft/libft.h"
 
 void			command_not_found(char *error);
-void			ft_builtins(char ***env, char *cmd, char *builtins);
 void			command_env(char **env, char *cmd, char *builtins);
 void			free_string(char **str);
 void			binary_cd(char ***env, char *cmd);
 int				search_v(char **env, char *str);
-char			**add_v(char **env, char *variable, char *value);
+char			**add_v(char **env, char *variable, char *value, int bol);
 int				size_env(char **env);
 void			free_env(char **env);
 void			command_unsetenv(char ***env, char *cmd);
@@ -37,5 +37,7 @@ void			modify_v(char **env, int p, char *var, char *val);
 void			error_msg(char *error, char *file);
 void			command_exit(char *cmd);
 void			exec_command(char ***env, char *cmd);
+void			command_echo(char *cmd);
+void			free_cd(char **av, char *dir, char *path, int bol);
 
 #endif

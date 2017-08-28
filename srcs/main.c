@@ -6,7 +6,7 @@
 /*   By: liton <livbrandon@outlook.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/04 19:56:19 by liton             #+#    #+#             */
-/*   Updated: 2017/08/26 23:43:58 by liton            ###   ########.fr       */
+/*   Updated: 2017/08/27 18:13:11 by liton            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,20 @@ static char			*parsing(char *cmd)
 	return (NULL);
 }
 
+static void			ft_builtins(char ***env, char *cmd, char *builtins)
+{
+	if (!ft_strcmp(builtins, "env"))
+		command_env(*env, cmd, builtins);
+	else if (!ft_strcmp(builtins, "cd"))
+		binary_cd(env, cmd);
+	else if (!(ft_strcmp(builtins, "unsetenv")))
+		command_unsetenv(env, cmd);
+	else if (!(ft_strcmp(builtins, "setenv")))
+		command_setenv(env, cmd);
+	else if (!(ft_strcmp(builtins, "exit")))
+		command_exit(cmd);
+}
+
 static char		**strcpy_env(char **envp)
 {
 	char	**env;
@@ -56,45 +70,7 @@ static char		**strcpy_env(char **envp)
 	return (env);
 }
 
-void			exec_command(char ***env, char *cmd)
-{
-	char		**av;
-	int			i;
-	pid_t		pid;
-	char		**env_path;
-	char		*path;
-
-	path = NULL;
-	if ((i = search_v(*env, "PATH")) == -1)
-	{
-		ft_putstr_fd("Variable PATH not set.\n", 2);
-		return ;
-	}
-	pid = fork();
-	if (pid > 0)
-		wait(NULL);
-	if (pid == 0 && cmd[0] != '/')
-	{
-		av = ft_strsplit(cmd, ' ');
-		env_path = ft_strsplit((*env)[i] + 5, ':');
-		i = -1;
-		while (env_path[++i])
-		{
-			path = ft_strjoin(env_path[i], path);
-			path = ft_strjoinfree(path, "/", 1);
-			path = ft_strjoinfree(path, av[0], 1);
-			execve(path, av, *env);
-			ft_strdel(&path);
-		}
-		command_not_found(av[0]);
-		ft_strdel(&path);
-		free_env(av);
-		free_env(env_path);
-		exit(pid);
-	}
-}
-
-char		*read_cmd(void)
+static char		*read_cmd(void)
 {
 	char	buf[5 + 1];
 	char	*save;

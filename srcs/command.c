@@ -6,7 +6,7 @@
 /*   By: liton <livbrandon@outlook.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/27 20:47:18 by liton             #+#    #+#             */
-/*   Updated: 2017/08/26 23:09:01 by liton            ###   ########.fr       */
+/*   Updated: 2017/08/27 18:21:11 by liton            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,9 +40,9 @@ void			command_setenv(char ***env, char *cmd)
 	if ((p = search_v(*env, av[1])) == -1)
 	{
 		if (av[2])
-			new_env = add_v(*env, av[1], av[2]);
+			new_env = add_v(*env, av[1], av[2], 0);
 		else
-			new_env = add_v(*env, av[1], "");
+			new_env = add_v(*env, av[1], "", 0);
 		*env = new_env;
 	}
 	else if (av[2] && av[3] && ft_atoi(av[3]) != 0)
@@ -102,8 +102,37 @@ void			command_unsetenv(char ***env, char *cmd)
 
 void			command_env(char **env, char *cmd, char *builtins)
 {
+	char	**new_env;
+	char	*var;
+	char	*val;
+	int		i;
+	char	**av;
+
+	i = 0;
+	new_env = NULL;
 	if (ft_strcmp(cmd, builtins) == 0)
 		ft_display_tab(env);
 	else
-		exec_command(&env, cmd);
+	{
+		av = ft_strsplit(cmd, ' ');
+		while (av[1] && av[1][i] && av[1][i] != '=')
+			++i;
+		if (i == 0)
+			ft_putendl_fd("Need variable.", 2);
+		else if (!ft_strchr(av[1], '='))
+			exec_command(&env, cmd);
+		else if (ft_strcmp(ft_strchr(av[1], '='), ft_strrchr(av[1], '=')) != 0)
+			ft_putendl_fd("Variable can not contain '='.", 2);
+		else
+		{
+			var = ft_strsub(av[1], 0, i);
+			val = ft_strsub(av[1], i + 1, ft_strlen(av[1]) - (i + 1));
+			new_env = add_v(env, var, val, 1);
+			exec_command(&new_env, cmd);
+			free_env(new_env);
+			ft_strdel(&var);
+			ft_strdel(&val);
+		}
+		free_env(av);
+	}
 }

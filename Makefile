@@ -6,7 +6,7 @@
 #    By: liton <marvin@42.fr>                       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/08/14 20:24:52 by liton             #+#    #+#              #
-#*   Updated: 2017/08/26 02:05:29 by liton            ###   ########.fr       *#
+#*   Updated: 2017/08/27 08:33:03 by liton            ###   ########.fr       *#
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,7 +23,7 @@ SRC	=	add_v.c				\
 		command.c			\
 		error_msg.c     	\
 		free.c				\
-		ft_builtins.c		\
+		exec_command.c      \
 		search_v.c			\
 		main.c
 # colors

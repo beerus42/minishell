@@ -6,7 +6,7 @@
 /*   By: liton <livbrandon@outlook.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/27 20:03:45 by liton             #+#    #+#             */
-/*   Updated: 2017/08/25 04:39:16 by liton            ###   ########.fr       */
+/*   Updated: 2017/08/28 01:22:25 by liton            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,13 +27,13 @@ char		*my_strcpy(int i, char *error)
 
 void			error_msg(char *error, char *file)
 {
-	ft_putstr_fd(error, 2);
 	if (file)
 	{
+		ft_putstr_fd(error, 2);
 		ft_putchar_fd(' ', 2);
 		ft_putstr_fd(file, 2);
+		ft_putchar_fd('\n', 2);
 	}
-	ft_putchar_fd('\n', 2);
 }
 
 void			command_not_found(char *error)

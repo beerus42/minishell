@@ -6,11 +6,19 @@
 /*   By: liton <livbrandon@outlook.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/31 22:28:22 by liton             #+#    #+#             */
-/*   Updated: 2017/08/26 00:13:35 by liton            ###   ########.fr       */
+/*   Updated: 2017/08/28 00:49:52 by liton            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+void	free_cd(char **av, char *dir, char *path, int bol)
+{
+	if (bol == 0)
+		ft_strdel(&dir);
+	free_env(av);
+	ft_strdel(&path);
+}
 
 void	free_env(char **env)
 {

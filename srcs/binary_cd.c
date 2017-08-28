@@ -6,19 +6,11 @@
 /*   By: liton <livbrandon@outlook.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/01 23:43:56 by liton             #+#    #+#             */
-/*   Updated: 2017/08/26 23:38:49 by liton            ###   ########.fr       */
+/*   Updated: 2017/08/28 02:20:21 by liton            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-static void		free_cd(char **av, char *dir, char *path, int bol)
-{
-	if (bol == 0)
-		ft_strdel(&dir);
-	free_env(av);
-	ft_strdel(&path);
-}
 
 static int		support_cd(char **av, char *dir, char **env, char **path)
 {
@@ -74,14 +66,14 @@ static void		modify_env(char ***env, char *dir)
 		modify_v(*env, p, "OLDPWD", dir);
 	else
 	{
-		new_env = add_v(*env, "OLDPWD", dir);
+		new_env = add_v(*env, "OLDPWD", dir, 0);
 		*env = new_env;
 	}
 	if ((p = search_v(*env, "PWD")) != -1)
 		modify_v(*env, p, "PWD", getcwd(dir, 100));
 	else
 	{
-		new_env = add_v(*env, "PWD", getcwd(dir, 100));
+		new_env = add_v(*env, "PWD", getcwd(dir, 100), 0);
 		*env = new_env;
 	}
 }
