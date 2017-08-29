@@ -6,7 +6,7 @@
 /*   By: liton <livbrandon@outlook.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/01 23:43:56 by liton             #+#    #+#             */
-/*   Updated: 2017/08/28 02:20:21 by liton            ###   ########.fr       */
+/*   Updated: 2017/08/29 18:13:15 by liton            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,8 @@
 
 static int		support_cd(char **av, char *dir, char **env, char **path)
 {
-	int		p;
+	struct stat 	buf;
+	int				p;
 
 	if (!av[1])
 	{
@@ -25,6 +26,17 @@ static int		support_cd(char **av, char *dir, char **env, char **path)
 			return (-1);
 		}
 		*path = ft_strjoinfree(*path, env[p] + 5, 1);
+		if (stat(*path, &buf) == -1)
+		{
+			if (env[p][5] == '\0')
+				ft_putstr_fd("Variable HOME not set.\n", 2);
+			else
+				error_msg("cd: no such file or directory", env[p] + 5);	
+			free_cd(av, dir, *path, 0);
+			return (-1);
+		}
+		if (!(buf.st_mode & S_IXUSR))
+			error_msg("cd: permission denied:", env[p] + 5);
 	}
 	return (0);
 }
@@ -90,7 +102,7 @@ void			binary_cd(char ***env, char *cmd)
 	path = ft_strnew(0);
 	if ((support_cd(av, dir, *env, &path)) == -1)
 		return ;
-	 else if (!path[0] && (support_cd_2(av, dir, *env, &path)) == -1)
+	if (!path[0] && (support_cd_2(av, dir, *env, &path)) == -1)
 		return ;
 	if (chdir(path))
 	{
