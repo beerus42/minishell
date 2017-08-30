@@ -6,7 +6,7 @@
 /*   By: liton <livbrandon@outlook.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/27 20:47:18 by liton             #+#    #+#             */
-/*   Updated: 2017/08/27 18:21:11 by liton            ###   ########.fr       */
+/*   Updated: 2017/08/30 22:15:30 by liton            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,16 +84,16 @@ void			command_unsetenv(char ***env, char *cmd)
 
 	p = 0;
 	av = ft_strsplit(cmd, ' ');
+	if (!*env || !av[1] || (p = search_v(*env, av[1])) == -1)
+	{
+		free_env(av);
+		return ;	
+	}
 	if (av[2])
 	{
 		ft_putendl_fd("unsetenv: too few arguments", 2);
 		free_env(av);
 		return ;
-	}
-	if (!*env || !av[1] || (p = search_v(*env, av[1])) == -1)
-	{
-		free_env(av);
-		return ;	
 	}
 	new_env = del_v(*env, p);
 	free_env(av);

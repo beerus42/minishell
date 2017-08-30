@@ -6,7 +6,7 @@
 /*   By: liton <livbrandon@outlook.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/04 19:56:19 by liton             #+#    #+#             */
-/*   Updated: 2017/08/27 18:13:11 by liton            ###   ########.fr       */
+/*   Updated: 2017/08/30 22:10:14 by liton            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,9 @@ static void			ft_builtins(char ***env, char *cmd, char *builtins)
 		command_setenv(env, cmd);
 	else if (!(ft_strcmp(builtins, "exit")))
 		command_exit(cmd);
+	else if (!(ft_strcmp(builtins, "echo")))
+		command_echo(cmd);
+		
 }
 
 static char		**strcpy_env(char **envp)
