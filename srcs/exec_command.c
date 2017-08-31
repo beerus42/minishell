@@ -6,7 +6,7 @@
 /*   By: liton <livbrandon@outlook.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/27 08:31:05 by liton             #+#    #+#             */
-/*   Updated: 2017/08/30 22:11:09 by liton            ###   ########.fr       */
+/*   Updated: 2017/08/31 17:02:05 by liton            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,13 +16,13 @@ static void			support_exec_cmd(char **env, pid_t pid, char *cmd, int i)
 {
 	char	**env_path;
 	char	**av;
-	char	*path;	
+	char	*path;
 
 	av = ft_strsplit(cmd, ' ');
 	env_path = ft_strsplit(env[i] + 5, ':');
 	path = NULL;
 	i = -1;
-	while(env_path[++i])
+	while (env_path[++i])
 	{
 		path = ft_strjoin(env_path[i], path);
 		path = ft_strjoinfree(path, "/", 1);
@@ -35,7 +35,6 @@ static void			support_exec_cmd(char **env, pid_t pid, char *cmd, int i)
 	free_env(av);
 	free_env(env_path);
 	exit(pid);
-
 }
 
 void				exec_command(char ***env, char *cmd)
@@ -61,10 +60,10 @@ void				exec_command(char ***env, char *cmd)
 		command_not_found(av[0]);
 		free_env(av);
 		exit(pid);
-	}		
+	}
 }
 
-void			command_echo(char *cmd)
+void				command_echo(char *cmd)
 {
 	char	**av;
 	int		i;

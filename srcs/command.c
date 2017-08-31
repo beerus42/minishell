@@ -6,7 +6,7 @@
 /*   By: liton <livbrandon@outlook.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/27 20:47:18 by liton             #+#    #+#             */
-/*   Updated: 2017/08/30 22:15:30 by liton            ###   ########.fr       */
+/*   Updated: 2017/08/31 17:04:48 by liton            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ static char		**del_v(char **env, int place)
 	{
 		if (i == place)
 			++i;
-		if	(env[i])
+		if (env[i])
 		{
 			new_env[j] = ft_strdup(env[i]);
 			++i;
@@ -87,7 +87,7 @@ void			command_unsetenv(char ***env, char *cmd)
 	if (!*env || !av[1] || (p = search_v(*env, av[1])) == -1)
 	{
 		free_env(av);
-		return ;	
+		return ;
 	}
 	if (av[2])
 	{

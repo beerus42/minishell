@@ -6,7 +6,7 @@
 /*   By: liton <livbrandon@outlook.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/31 22:28:22 by liton             #+#    #+#             */
-/*   Updated: 2017/08/29 16:11:31 by liton            ###   ########.fr       */
+/*   Updated: 2017/08/31 17:00:31 by liton            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	free_env(char **env)
 
 	i = 0;
 	if (!env)
-		return;
+		return ;
 	while (env[i])
 	{
 		ft_strdel(&env[i]);

@@ -6,7 +6,7 @@
 /*   By: liton <livbrandon@outlook.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/01 23:19:37 by liton             #+#    #+#             */
-/*   Updated: 2017/08/25 03:42:43 by liton            ###   ########.fr       */
+/*   Updated: 2017/08/31 17:06:36 by liton            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int		search_v(char **env, char *str)
 	{
 		k = 0;
 		i = save;
-		 while (env[j][k + 1] != '=')
+		while (env[j][k + 1] != '=')
 			++k;
 		while (env[j][k] == str[i])
 		{

@@ -6,7 +6,7 @@
 /*   By: liton <livbrandon@outlook.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/01 23:43:56 by liton             #+#    #+#             */
-/*   Updated: 2017/08/30 22:08:55 by liton            ###   ########.fr       */
+/*   Updated: 2017/08/31 17:06:16 by liton            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 static int		support_cd(char **av, char *dir, char **env, char **path)
 {
-	struct stat 	buf;
+	struct stat		buf;
 	int				p;
 
 	if (!av[1])
@@ -31,7 +31,7 @@ static int		support_cd(char **av, char *dir, char **env, char **path)
 			if (env[p][5] == '\0')
 				ft_putstr_fd("Variable HOME don't have value.\n", 2);
 			else
-				error_msg("cd: no such file or directory", env[p] + 5);	
+				error_msg("cd: no such file or directory", env[p] + 5);
 			free_cd(av, dir, *path, 0);
 			return (-1);
 		}
@@ -41,7 +41,7 @@ static int		support_cd(char **av, char *dir, char **env, char **path)
 	return (0);
 }
 
-static int 	support_cd_3(char **av, char *dir, char **env , char ***path)
+static int		support_cd_3(char **av, char *dir, char **env, char ***path)
 {
 	int				p;
 	struct stat		buf;
@@ -69,7 +69,7 @@ static int 	support_cd_3(char **av, char *dir, char **env , char ***path)
 	return (0);
 }
 
-static int	support_cd_2(char **av, char *dir, char **env, char **path)
+static int		support_cd_2(char **av, char *dir, char **env, char **path)
 {
 	if (!ft_strcmp(av[1], "-") && support_cd_3(av, dir, env, &path) == -1)
 		return (-1);

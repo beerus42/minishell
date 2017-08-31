@@ -6,7 +6,7 @@
 /*   By: liton <livbrandon@outlook.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/04 19:56:19 by liton             #+#    #+#             */
-/*   Updated: 2017/08/30 22:10:14 by liton            ###   ########.fr       */
+/*   Updated: 2017/08/31 17:04:11 by liton            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ static char			*parsing(char *cmd)
 	int						k;
 	char					*builtins;
 	static const char		*b[6] = {"env", "cd", "echo", "unsetenv",
-									  "setenv", "exit"};
+										"setenv", "exit"};
 
 	i = -1;
 	end = 0;
@@ -54,10 +54,9 @@ static void			ft_builtins(char ***env, char *cmd, char *builtins)
 		command_exit(cmd);
 	else if (!(ft_strcmp(builtins, "echo")))
 		command_echo(cmd);
-		
 }
 
-static char		**strcpy_env(char **envp)
+static char			**strcpy_env(char **envp)
 {
 	char	**env;
 	int		i;
@@ -73,7 +72,7 @@ static char		**strcpy_env(char **envp)
 	return (env);
 }
 
-static char		*read_cmd(void)
+static char			*read_cmd(void)
 {
 	char	buf[5 + 1];
 	char	*save;
@@ -96,7 +95,7 @@ static char		*read_cmd(void)
 	return (save);
 }
 
-int				main(int ac, char **av, char **envp)
+int					main(int ac, char **av, char **envp)
 {
 	char		**env;
 	char		*builtins;
@@ -119,7 +118,7 @@ int				main(int ac, char **av, char **envp)
 		else if (cmd)
 		{
 			exec_command(&env, cmd);
-			ft_strdel(&cmd);	
+			ft_strdel(&cmd);
 		}
 	}
 }

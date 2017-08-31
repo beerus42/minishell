@@ -6,7 +6,7 @@
 /*   By: liton <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/12/27 17:06:21 by liton             #+#    #+#             */
-/*   Updated: 2017/02/17 02:10:10 by liton            ###   ########.fr       */
+/*   Updated: 2017/08/31 16:59:42 by liton            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,8 +87,8 @@ int		fd_in_list(const int fd, char **line, t_gnl **list)
 		*list = create_chained_list(*list, fd);
 	if (ft_strchr((*list)->save, '\n') && !(*list)->end)
 	{
-			*list = copy(*list, line);
-			return (1);
+		*list = copy(*list, line);
+		return (1);
 	}
 	return (0);
 }
@@ -96,7 +96,7 @@ int		fd_in_list(const int fd, char **line, t_gnl **list)
 int		get_next_line(const int fd, char **line)
 {
 	static t_gnl	*list = NULL;
-	
+
 	if (fd < 0)
 		return (-1);
 	if (fd_in_list(fd, line, &list) || read_fd(line, &list, fd))

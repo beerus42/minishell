@@ -6,17 +6,15 @@
 /*   By: beerus <bckeur@free.exe>                   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/06 21:52:13 by beerus            #+#    #+#             */
-/*   Updated: 2017/02/17 02:12:07 by liton            ###   ########.fr       */
+/*   Updated: 2017/08/31 16:58:39 by liton            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef LIBFT_H
 # define LIBFT_H
-# define BUFF_SIZE 100 
+# define BUFF_SIZE 100
 
 # include <string.h>
-
-
 
 typedef struct	s_list
 {
