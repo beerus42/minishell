@@ -6,7 +6,7 @@
 /*   By: liton <livbrandon@outlook.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/01 01:43:44 by liton             #+#    #+#             */
-/*   Updated: 2017/09/01 06:46:55 by liton            ###   ########.fr       */
+/*   Updated: 2017/09/01 22:04:24 by liton            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,12 @@ static void			command_setenv(char ***env, char *cmd)
 	new_env = NULL;
 	if (!*env || !av[1])
 	{
+		free_env(av);
+		return ;
+	}
+	if ((av[1] && ft_strchr(av[1], '=')) || (av[2] && ft_strchr(av[2], '=')))
+	{
+		ft_putstr_fd("setenv: variable or value can't contain '='.\n", 2);
 		free_env(av);
 		return ;
 	}

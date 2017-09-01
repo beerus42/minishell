@@ -6,7 +6,7 @@
 /*   By: liton <livbrandon@outlook.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/14 02:12:47 by liton             #+#    #+#             */
-/*   Updated: 2017/09/01 03:58:03 by liton            ###   ########.fr       */
+/*   Updated: 2017/09/01 19:05:36 by liton            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,14 +47,14 @@ static void		cpy_var(char **env, int i, char *variable, char *value)
 
 	j = 0;
 	k = 0;
-	while (variable[j])
+	while (variable && variable[j])
 	{
 		env[i][j] = variable[j];
 		++j;
 	}
 	env[i][j] = '=';
 	++j;
-	while (value[k])
+	while (value && value[k])
 	{
 		env[i][j] = value[k];
 		++k;

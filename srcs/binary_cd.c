@@ -6,7 +6,7 @@
 /*   By: liton <livbrandon@outlook.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/01 23:43:56 by liton             #+#    #+#             */
-/*   Updated: 2017/09/01 05:58:35 by liton            ###   ########.fr       */
+/*   Updated: 2017/09/01 21:56:42 by liton            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,7 @@ static void		modify_env(char ***env, char **dir)
 		(i >= 0) ? modify_v(*env, p, "OLDPWD", (*env)[i] + 4) : modify_v(*env, p, "OLDPWD", *dir);
 	else
 	{
-		new_env = add_v(*env, "OLDPWD", *dir, 0);
+		new_env = i >= 0 ? add_v(*env, "OLDPWD", (*env)[i] + 4, 0) : add_v(*env, "OLDPWD", *dir, 0);
 		*env = new_env;
 	}
 	if ((p = search_v(*env, "PWD")) != -1)
@@ -130,9 +130,11 @@ void			binary_cd(char ***env, char *cmd)
 		return ;
 	if (chdir(path))
 	{
-		if (stat(path, &buf) == 0 && ft_strcmp(av[1], "-") != 0)
-			error_msg("cd: permission denied:", av[1]);
-		else if (av[1] && ft_strcmp(av[1], "-") != 0)
+		if (!stat(path, &buf) && !(S_ISDIR(buf.st_mode)) && ft_strcmp(av[1], "-"))
+			error_msg("cd: not a directory:", av[1]);
+		else if (!stat(path, &buf) && !(buf.st_mode & S_IXUSR) && ft_strcmp(av[1], "-"))
+			error_msg("cd: permission denied:", av[1]);	
+		else if (av[1] && ft_strcmp(av[1], "-"))
 			error_msg("cd: no such file or directory", av[1]);
 		free_cd(av, dir, path, 0);
 		return ;
