@@ -6,11 +6,22 @@
 /*   By: liton <livbrandon@outlook.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/04 19:56:19 by liton             #+#    #+#             */
-/*   Updated: 2017/08/31 17:18:25 by liton            ###   ########.fr       */
+/*   Updated: 2017/09/01 01:56:13 by liton            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+static void			change_cmd(char **cmd)
+{
+	char	*dir;
+
+	dir = NULL;
+	dir = getcwd(dir, 100);
+	dir = ft_strjoinfree(dir, "/", 1);
+	*cmd = ft_strjoinfree(dir, *cmd, 2);
+	ft_strdel(&dir);
+}
 
 static char			*parsing(char *cmd)
 {
@@ -38,22 +49,6 @@ static char			*parsing(char *cmd)
 	}
 	ft_strdel(&builtins);
 	return (NULL);
-}
-
-static void			ft_builtins(char ***env, char *cmd, char *builtins)
-{
-	if (!ft_strcmp(builtins, "env"))
-		command_env(*env, cmd, builtins);
-	else if (!ft_strcmp(builtins, "cd"))
-		binary_cd(env, cmd);
-	else if (!(ft_strcmp(builtins, "unsetenv")))
-		command_unsetenv(env, cmd);
-	else if (!(ft_strcmp(builtins, "setenv")))
-		command_setenv(env, cmd);
-	else if (!(ft_strcmp(builtins, "exit")))
-		command_exit(cmd);
-	else if (!(ft_strcmp(builtins, "echo")))
-		command_echo(cmd);
 }
 
 static char			**strcpy_env(char **envp)
@@ -108,6 +103,8 @@ int					main(int ac, char **av, char **envp)
 	while (42)
 	{
 		cmd = read_cmd();
+		if (cmd && cmd[0] && cmd[1] && cmd[0] == '.' && cmd[1] == '/')
+			change_cmd(&cmd);	
 		builtins = parsing(cmd);
 		if (builtins != NULL)
 		{

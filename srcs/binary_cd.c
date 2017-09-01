@@ -6,7 +6,7 @@
 /*   By: liton <livbrandon@outlook.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/01 23:43:56 by liton             #+#    #+#             */
-/*   Updated: 2017/08/31 18:05:41 by liton            ###   ########.fr       */
+/*   Updated: 2017/09/01 04:21:55 by liton            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,24 +85,30 @@ static int		support_cd_2(char **av, char *dir, char **env, char **path)
 	return (0);
 }
 
-static void		modify_env(char ***env, char *dir)
+static void		modify_env(char ***env, char **dir)
 {
+	int		i;
 	int		p;
 	char	**new_env;
 
 	new_env = NULL;
+	i = search_v(*env, "PWD");
 	if ((p = search_v(*env, "OLDPWD")) != -1)
-		modify_v(*env, p, "OLDPWD", dir);
+		(i >= 0) ? modify_v(*env, p, "OLDPWD", (*env)[i] + 4) : modify_v(*env, p, "OLDPWD", *dir);
 	else
 	{
-		new_env = add_v(*env, "OLDPWD", dir, 0);
+		new_env = add_v(*env, "OLDPWD", *dir, 0);
 		*env = new_env;
 	}
 	if ((p = search_v(*env, "PWD")) != -1)
-		modify_v(*env, p, "PWD", getcwd(dir, 100));
+	{
+		ft_strdel(dir);
+		modify_v(*env, p, "PWD", (*dir = getcwd(*dir, 100)));
+	}
 	else
 	{
-		new_env = add_v(*env, "PWD", getcwd(dir, 100), 0);
+		ft_strdel(dir);
+		new_env = add_v(*env, "PWD", (*dir = getcwd(*dir, 100)), 0);
 		*env = new_env;
 	}
 }
@@ -132,6 +138,6 @@ void			binary_cd(char ***env, char *cmd)
 		return ;
 	}
 	free_cd(av, dir, path, 1);
-	modify_env(env, dir);
+	modify_env(env, &dir);
 	ft_strdel(&dir);
 }

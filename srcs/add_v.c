@@ -6,7 +6,7 @@
 /*   By: liton <livbrandon@outlook.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/14 02:12:47 by liton             #+#    #+#             */
-/*   Updated: 2017/08/29 16:08:22 by liton            ###   ########.fr       */
+/*   Updated: 2017/09/01 03:58:03 by liton            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,10 +20,10 @@ void			modify_v(char **env, int p, char *var, char *val)
 
 	i = -1;
 	j = -1;
-	while (var[++i])
+	while (var && var[++i])
 		str[i] = var[i];
 	str[i++] = '=';
-	while (val[++j])
+	while (val && val[++j])
 		str[i++] = val[j];
 	str[i] = '\0';
 	ft_strdel(&env[p]);

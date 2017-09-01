@@ -6,7 +6,7 @@
 /*   By: liton <livbrandon@outlook.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/27 08:31:05 by liton             #+#    #+#             */
-/*   Updated: 2017/08/31 18:16:14 by liton            ###   ########.fr       */
+/*   Updated: 2017/09/01 01:56:49 by liton            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ void				exec_command(char ***env, char *cmd)
 	char		**av;
 	pid_t		pid;
 
-	if ((i = search_v(*env, "PATH")) == -1)
+	if ((i = search_v(*env, "PATH")) == -1 && cmd[0] != '/')
 	{
 		ft_putstr_fd("Variable PATH not set.\n", 2);
 		return ;
@@ -51,9 +51,9 @@ void				exec_command(char ***env, char *cmd)
 	pid = fork();
 	if (pid > 0)
 		wait(NULL);
-	if (pid == 0 && cmd[0] != '/')
+	if (pid == 0 && ((cmd[0] != '/' || (cmd[0] != '.' && cmd[0] != '/'))))
 		support_exec_cmd(*env, pid, cmd, i);
-	else if (pid == 0 && cmd[0] == '/')
+	else if (pid == 0 && (cmd[0] == '/' || (cmd[0] == '.' && cmd[1] == '/')))
 	{
 		av = ft_strsplit(cmd, ' ');
 		execve(av[0], av, *env);
