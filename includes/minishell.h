@@ -6,7 +6,7 @@
 /*   By: liton <livbrandon@outlook.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/04 20:05:12 by liton             #+#    #+#             */
-/*   Updated: 2017/09/01 05:59:10 by liton            ###   ########.fr       */
+/*   Updated: 2017/09/01 23:18:51 by liton            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,6 @@
 
 void			command_not_found(char *error);
 void			command_env(char **env, char *cmd, char *builtins);
-void			free_string(char **str);
 void			binary_cd(char ***env, char *cmd);
 int				search_v(char **env, char *str);
 char			**add_v(char **env, char *variable, char *value, int bol);

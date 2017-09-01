@@ -6,7 +6,7 @@
 /*   By: liton <livbrandon@outlook.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/31 22:28:22 by liton             #+#    #+#             */
-/*   Updated: 2017/08/31 17:00:31 by liton            ###   ########.fr       */
+/*   Updated: 2017/09/01 23:18:58 by liton            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,10 +34,4 @@ void	free_env(char **env)
 	}
 	free(env);
 	env = NULL;
-}
-
-void	free_string(char **str)
-{
-	free(*str);
-	*str = NULL;
 }
