@@ -6,22 +6,11 @@
 /*   By: liton <livbrandon@outlook.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/04 19:56:19 by liton             #+#    #+#             */
-/*   Updated: 2017/09/01 01:56:13 by liton            ###   ########.fr       */
+/*   Updated: 2017/09/01 06:01:42 by liton            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-static void			change_cmd(char **cmd)
-{
-	char	*dir;
-
-	dir = NULL;
-	dir = getcwd(dir, 100);
-	dir = ft_strjoinfree(dir, "/", 1);
-	*cmd = ft_strjoinfree(dir, *cmd, 2);
-	ft_strdel(&dir);
-}
 
 static char			*parsing(char *cmd)
 {
@@ -103,8 +92,6 @@ int					main(int ac, char **av, char **envp)
 	while (42)
 	{
 		cmd = read_cmd();
-		if (cmd && cmd[0] && cmd[1] && cmd[0] == '.' && cmd[1] == '/')
-			change_cmd(&cmd);	
 		builtins = parsing(cmd);
 		if (builtins != NULL)
 		{
