@@ -6,7 +6,7 @@
 /*   By: liton <livbrandon@outlook.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/27 20:47:18 by liton             #+#    #+#             */
-/*   Updated: 2017/09/01 22:00:13 by liton            ###   ########.fr       */
+/*   Updated: 2017/09/01 22:30:09 by liton            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,8 @@
 void			command_env(char **env, char *cmd, char *builtins)
 {
 	char	**new_env;
-	char	*var;
-	char	*val;
+//	char	*var;
+//	char	*val;
 	int		i;
 	char	**av;
 
@@ -37,14 +37,15 @@ void			command_env(char **env, char *cmd, char *builtins)
 			ft_putendl_fd("Variable can not contain '='.", 2);
 		else
 		{
-			var = ft_strsub(av[1], 0, i);
-			val = ft_strsub(av[1], i + 1, ft_strlen(av[1]) - (i + 1));
-			new_env = add_v(env, var, val, 1);
-			exec_command(&new_env, cmd);
-			free_env(new_env);
-			ft_strdel(&var);
-			ft_strdel(&val);
+//			var = ft_strsub(av[1], 0, i);
+//			val = ft_strsub(av[1], i + 1, ft_strlen(av[1]) - (i + 1));
+//			if (i == serch_v(env,
+		//	new_env = add_v(env, var, val, 1);
+			exec_command(&env, cmd);
+			//free_env(new_env);
+	//		ft_strdel(&var);
+	//		ft_strdel(&val);
 		}
-		free_env(av);
+//		free_env(av);
 	}
 }

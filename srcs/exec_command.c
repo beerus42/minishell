@@ -6,11 +6,25 @@
 /*   By: liton <livbrandon@outlook.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/27 08:31:05 by liton             #+#    #+#             */
-/*   Updated: 2017/09/01 19:23:03 by liton            ###   ########.fr       */
+/*   Updated: 2017/09/01 23:09:19 by liton            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+static void			error_exec(char *cmd)
+{
+	struct stat		buf;
+	int				bol;
+
+	bol = stat(cmd, &buf);
+	if (bol == 0 && S_ISDIR(buf.st_mode))
+		error_msg("bash: is a directory:", cmd);	
+	else if (bol == 0 && !(buf.st_mode & S_IXUSR))
+		error_msg("bash: persmission denied:", cmd);
+	else if (bol == -1)
+		error_msg("bash: no such file or directory", cmd);
+}
 
 static void			support_exec_cmd(char **env, pid_t pid, char *cmd, int i)
 {
@@ -30,7 +44,10 @@ static void			support_exec_cmd(char **env, pid_t pid, char *cmd, int i)
 		execve(path, av, env);
 		ft_strdel(&path);
 	}
-	command_not_found(av[0]);
+	if (av[0] && av[0][0] != '.' && av[0][1] != '/')
+		command_not_found(av[0]);
+	else
+		error_exec(av[0]);
 	ft_strdel(&path);
 	free_env(av);
 	free_env(env_path);
