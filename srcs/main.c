@@ -6,11 +6,23 @@
 /*   By: liton <livbrandon@outlook.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/04 19:56:19 by liton             #+#    #+#             */
-/*   Updated: 2017/09/01 06:01:42 by liton            ###   ########.fr       */
+/*   Updated: 2017/09/02 20:31:53 by liton            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+static int			check_cmd(char *cmd)
+{
+	int		i;
+
+	i = 0;
+	while (cmd && cmd[i] && (cmd[i] == ' ' || cmd[i] == '\t'))
+		++i;
+	if (cmd[i] == '\0')
+		return (-1);
+	return (0);
+}
 
 static char			*parsing(char *cmd)
 {
@@ -19,7 +31,7 @@ static char			*parsing(char *cmd)
 	int						k;
 	char					*builtins;
 	static const char		*b[6] = {"env", "cd", "echo", "unsetenv",
-										"setenv", "exit"};
+		"setenv", "exit"};
 
 	i = -1;
 	end = 0;
@@ -99,7 +111,7 @@ int					main(int ac, char **av, char **envp)
 			ft_strdel(&cmd);
 			ft_strdel(&builtins);
 		}
-		else if (cmd)
+		else if (cmd && check_cmd(cmd) != -1)
 		{
 			exec_command(&env, cmd);
 			ft_strdel(&cmd);
