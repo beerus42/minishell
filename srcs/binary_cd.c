@@ -6,7 +6,7 @@
 /*   By: liton <livbrandon@outlook.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/01 23:43:56 by liton             #+#    #+#             */
-/*   Updated: 2017/09/01 22:54:10 by liton            ###   ########.fr       */
+/*   Updated: 2017/09/02 05:07:16 by liton            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,7 @@ static void		modify_env(char ***env, char **dir)
 	new_env = NULL;
 	i = search_v(*env, "PWD");
 	if ((p = search_v(*env, "OLDPWD")) != -1)
-		(i >= 0) ? modify_v(*env, p, "OLDPWD", (*env)[i] + 4) : modify_v(*env, p, "OLDPWD", *dir);
+		i >= 0 ? modify_v(*env, p, "OLDPWD", (*env)[i] + 4) : modify_v(*env, p, "OLDPWD", *dir);
 	else
 	{
 		new_env = i >= 0 ? add_v(*env, "OLDPWD", (*env)[i] + 4, 0) : add_v(*env, "OLDPWD", *dir, 0);

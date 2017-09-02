@@ -6,7 +6,7 @@
 /*   By: liton <livbrandon@outlook.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/27 08:31:05 by liton             #+#    #+#             */
-/*   Updated: 2017/09/01 23:09:19 by liton            ###   ########.fr       */
+/*   Updated: 2017/09/02 05:16:23 by liton            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ void				command_echo(char *cmd)
 
 	i = 0;
 	av = ft_strsplit(cmd, ' ');
-	while (av[++i])
+	while (av && av[++i])
 	{
 		ft_putstr(av[i]);
 		if (av[i + 1])
