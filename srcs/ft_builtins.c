@@ -6,7 +6,7 @@
 /*   By: liton <livbrandon@outlook.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/01 01:43:44 by liton             #+#    #+#             */
-/*   Updated: 2017/09/02 20:04:56 by liton            ###   ########.fr       */
+/*   Updated: 2017/09/05 19:07:35 by liton            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ static void			command_exit(char *cmd)
 {
 	char	**av;
 
-	av = ft_strsplit(cmd, ' ');
+	av = ft_split_whitespaces(cmd);
 	if (!av[1])
 		exit(0);
 	else
@@ -30,7 +30,7 @@ static void			command_setenv(char ***env, char *cmd)
 	int		p;
 
 	p = 0;
-	av = ft_strsplit(cmd, ' ');
+	av = ft_split_whitespaces(cmd);
 	new_env = NULL;
 	if (!*env || !av[1])
 	{
@@ -89,7 +89,7 @@ static void			command_unsetenv(char ***env, char *cmd)
 	int		p;
 
 	p = 0;
-	av = ft_strsplit(cmd, ' ');
+	av = ft_split_whitespaces(cmd);
 	if (!*env || !av[1] || (p = search_v(*env, av[1])) == -1)
 	{
 		free_env(av);

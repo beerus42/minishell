@@ -6,7 +6,7 @@
 /*   By: liton <livbrandon@outlook.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/04 19:56:19 by liton             #+#    #+#             */
-/*   Updated: 2017/09/02 20:31:53 by liton            ###   ########.fr       */
+/*   Updated: 2017/09/05 19:16:55 by liton            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,10 +37,10 @@ static char			*parsing(char *cmd)
 	end = 0;
 	if (!cmd[0] || !cmd[1])
 		return (0);
-	while (cmd[end] && cmd[end] == ' ')
+	while (cmd[end] && (cmd[end] == ' ' || cmd[end] == '\t'))
 		++end;
 	k = end;
-	while (cmd[end + 1] && cmd[end + 1] != ' ')
+	while (cmd[end + 1] && (cmd[end + 1] != ' ' &&  cmd[end + 1] != '\t'))
 		++end;
 	builtins = ft_strsub(cmd, k, (end - k) + 1);
 	while (++i < 6)
@@ -91,6 +91,17 @@ static char			*read_cmd(void)
 	return (save);
 }
 
+void				env_null(char ***env)
+{
+	if (!(*env = (char**)malloc(sizeof(char*) * 5)))
+		return ;
+	(*env)[0] = ft_strdup("SHLVL=1");
+	(*env)[1] = ft_strdup("TERM=xterm-256color");
+	(*env)[2] = ft_strdup("PATH=/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin:/usr/local/munki");
+	(*env)[3] = ft_strdup("USER=liton");
+	(*env)[4] = NULL;
+}
+
 int					main(int ac, char **av, char **envp)
 {
 	char		**env;
@@ -98,9 +109,13 @@ int					main(int ac, char **av, char **envp)
 	char		*cmd;
 
 	(void)av;
+	env = NULL;
 	if (ac != 1)
 		return (0);
-	env = strcpy_env(envp);
+	if (envp && envp[0])
+		env = strcpy_env(envp);
+	else
+		env_null(&env);
 	while (42)
 	{
 		cmd = read_cmd();

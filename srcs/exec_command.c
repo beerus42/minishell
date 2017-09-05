@@ -6,7 +6,7 @@
 /*   By: liton <livbrandon@outlook.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/27 08:31:05 by liton             #+#    #+#             */
-/*   Updated: 2017/09/02 20:28:23 by liton            ###   ########.fr       */
+/*   Updated: 2017/09/05 19:06:05 by liton            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ static void			support_exec_cmd(char **env, char *cmd, int i)
 	char			**av;
 	char			*path;
 
-	av = ft_strsplit(cmd, ' ');
+	av = ft_split_whitespaces(cmd);
 	env_path = ft_strsplit(env[i] + 5, ':');
 	path = NULL;
 	i = -1;

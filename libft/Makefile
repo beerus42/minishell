@@ -82,6 +82,7 @@ SRC_NAME = ft_memset.c 	        \
 		   ft_atoll.c     		\
 		   ft_strjoinfree.c     \
 		   get_next_line.c      \
+		   ft_split_whitespaces.c \
 		   ft_lstadd_wiw.c
 
 OBJ_NAME = $(SRC_NAME:.c=.o)
