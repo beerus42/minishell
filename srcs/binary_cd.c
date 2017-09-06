@@ -6,7 +6,7 @@
 /*   By: liton <livbrandon@outlook.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/01 23:43:56 by liton             #+#    #+#             */
-/*   Updated: 2017/09/06 04:46:48 by liton            ###   ########.fr       */
+/*   Updated: 2017/09/06 17:27:52 by liton            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,10 +92,12 @@ static void		modify_env(char ***env, char *dir)
 
 	i = search_v(*env, "PWD");
 	if ((p = search_v(*env, "OLDPWD")) != -1)
-		i >= 0 ? modify_v(*env, p, "OLDPWD", (*env)[i] + 4) : modify_v(*env, p, "OLDPWD", dir);
+		i >= 0 ? modify_v(*env, p, "OLDPWD", (*env)[i] + 4)
+			: modify_v(*env, p, "OLDPWD", dir);
 	else
 	{
-		*env = i >= 0 ? add_v(*env, "OLDPWD", (*env)[i] + 4) : add_v(*env, "OLDPWD", dir);
+		*env = i >= 0
+		? add_v(*env, "OLDPWD", (*env)[i] + 4) : add_v(*env, "OLDPWD", dir);
 	}
 	if ((p = search_v(*env, "PWD")) != -1)
 	{
@@ -111,7 +113,6 @@ static void		modify_env(char ***env, char *dir)
 
 void			binary_cd(char ***env, char *cmd)
 {
-	struct stat		buf;
 	char			**av;
 	char			dir[1024 + 1];
 	char			*path;
@@ -125,12 +126,7 @@ void			binary_cd(char ***env, char *cmd)
 		return ;
 	if (chdir(path))
 	{
-		if (!stat(path, &buf) && !(S_ISDIR(buf.st_mode)) && ft_strcmp(av[1], "-"))
-			error_msg("cd: not a directory:", av[1]);
-		else if (!stat(path, &buf) && !(buf.st_mode & S_IXUSR) && ft_strcmp(av[1], "-"))
-			error_msg("cd: permission denied:", av[1]);	
-		else if (av[1] && ft_strcmp(av[1], "-"))
-			error_msg("cd: no such file or directory", av[1]);
+		error_cd(path, av[1]);
 		free_cd(av, path);
 		return ;
 	}

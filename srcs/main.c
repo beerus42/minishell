@@ -6,25 +6,13 @@
 /*   By: liton <livbrandon@outlook.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/04 19:56:19 by liton             #+#    #+#             */
-/*   Updated: 2017/09/06 03:29:35 by liton            ###   ########.fr       */
+/*   Updated: 2017/09/06 18:46:27 by liton            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static int			check_cmd(char *cmd)
-{
-	int		i;
-
-	i = 0;
-	while (cmd && cmd[i] && (cmd[i] == ' ' || cmd[i] == '\t'))
-		++i;
-	if (cmd[i] == '\0')
-		return (-1);
-	return (0);
-}
-
-static char			*parsing(char *cmd)
+static char				*parsing(char *cmd)
 {
 	int						i;
 	int						end;
@@ -40,7 +28,7 @@ static char			*parsing(char *cmd)
 	while (cmd[end] && (cmd[end] == ' ' || cmd[end] == '\t'))
 		++end;
 	k = end;
-	while (cmd[end + 1] && (cmd[end + 1] != ' ' &&  cmd[end + 1] != '\t'))
+	while (cmd[end + 1] && (cmd[end + 1] != ' ' && cmd[end + 1] != '\t'))
 		++end;
 	builtins = ft_strsub(cmd, k, (end - k) + 1);
 	while (++i < 6)
@@ -52,23 +40,7 @@ static char			*parsing(char *cmd)
 	return (NULL);
 }
 
-char			**strcpy_env(char **envp)
-{
-	char	**env;
-	int		i;
-
-	if (envp == NULL || *envp == NULL)
-		return (NULL);
-	if (!(env = (char**)malloc(sizeof(char*) * (size_env(envp) + 1))))
-		return (NULL);
-	i = -1;
-	while (envp[++i])
-		env[i] = ft_strdup(envp[i]);
-	env[i] = NULL;
-	return (env);
-}
-
-static char			*read_cmd(void)
+static char				*read_cmd(void)
 {
 	char	buf[5 + 1];
 	char	*save;
@@ -91,31 +63,41 @@ static char			*read_cmd(void)
 	return (save);
 }
 
-void				env_null(char ***env)
+static void				env_null(char ***env)
 {
 	if (!(*env = (char**)malloc(sizeof(char*) * 5)))
 		return ;
 	(*env)[0] = ft_strdup("SHLVL=1");
 	(*env)[1] = ft_strdup("TERM=xterm-256color");
-	(*env)[2] = ft_strdup("PATH=/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin:/usr/local/munki");
+	(*env)[2] =
+ft_strdup("PATH=/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin:/usr/local/munki");
 	(*env)[3] = ft_strdup("USER=liton");
 	(*env)[4] = NULL;
 }
 
-int					main(int ac, char **av, char **envp)
+static char				**env_main(int ac, char **envp)
+{
+	char	**env;
+
+	env = NULL;
+	if (ac != 1)
+		return (NULL);
+	if (envp && envp[0])
+		env = strcpy_env(envp);
+	else
+		env_null(&env);
+	return (env);
+}
+
+int						main(int ac, char **av, char **envp)
 {
 	char		**env;
 	char		*builtins;
 	char		*cmd;
 
 	(void)av;
-	env = NULL;
-	if (ac != 1)
-		return (0);
-	if (envp && envp[0])
-		env = strcpy_env(envp);
-	else
-		env_null(&env);
+	if ((env = env_main(ac, envp)) == NULL)
+		return (-1);
 	while (42)
 	{
 		cmd = read_cmd();
@@ -132,4 +114,6 @@ int					main(int ac, char **av, char **envp)
 			ft_strdel(&cmd);
 		}
 	}
+	free_env(env);
+	return (0);
 }

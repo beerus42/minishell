@@ -6,7 +6,7 @@
 /*   By: liton <livbrandon@outlook.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/04 20:05:12 by liton             #+#    #+#             */
-/*   Updated: 2017/09/06 04:42:52 by liton            ###   ########.fr       */
+/*   Updated: 2017/09/06 18:44:11 by liton            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,5 +37,8 @@ void			free_cd(char **av, char *path);
 void			command_echo(char *cmd);
 void			ft_builtins(char ***env, char *cmd, char *builtins);
 char			**strcpy_env(char **envp);
+void			error_cd(char *path, char *av);
+void			minishell(char **env);
+int				check_cmd(char *cmd);
 
 #endif

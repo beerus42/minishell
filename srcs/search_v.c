@@ -6,26 +6,19 @@
 /*   By: liton <livbrandon@outlook.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/01 23:19:37 by liton             #+#    #+#             */
-/*   Updated: 2017/09/01 04:16:12 by liton            ###   ########.fr       */
+/*   Updated: 2017/09/06 17:56:36 by liton            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int		search_v(char **env, char *str)
+static int		support_search_v(char **env, int save, char *str)
 {
 	int		i;
 	int		j;
 	int		k;
-	int		save;
 
-	i = 0;
 	j = 0;
-	if (!str || !str[0])
-		return (-1);
-	while (str && str[i + 1])
-		++i;
-	save = i;
 	while (env[j])
 	{
 		k = 0;
@@ -41,5 +34,22 @@ int		search_v(char **env, char *str)
 		}
 		++j;
 	}
+	return (-1);
+}
+
+int				search_v(char **env, char *str)
+{
+	int		i;
+	int		save;
+	int		good;
+
+	i = 0;
+	if (!str || !str[0])
+		return (-1);
+	while (str && str[i + 1])
+		++i;
+	save = i;
+	if ((good = support_search_v(env, save, str)) != -1)
+		return (good);
 	return (-1);
 }

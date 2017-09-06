@@ -6,36 +6,33 @@
 /*   By: liton <livbrandon@outlook.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/27 08:31:05 by liton             #+#    #+#             */
-/*   Updated: 2017/09/06 04:43:59 by liton            ###   ########.fr       */
+/*   Updated: 2017/09/06 17:50:20 by liton            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static void			error_exec(char *cmd)
+static void				error_exec(char *cmd)
 {
 	struct stat		buf;
 	int				bol;
 
 	bol = lstat(cmd, &buf);
 	if (bol == 0 && S_ISDIR(buf.st_mode))
-		error_msg("minishell: is a directory:", cmd);	
+		error_msg("minishell: is a directory:", cmd);
 	else if (bol == 0 && !(buf.st_mode & S_IXUSR))
 		error_msg("minishell: persmission denied:", cmd);
 	else if (bol == -1)
 		error_msg("minishell: no such file or directory", cmd);
 }
 
-static void			support_exec_cmd(char **env, char *cmd, int i)
+static void				search_binary(char **env_path, char **av, char **env)
 {
-	struct dirent 	*dirent;	
-	DIR				*dir;
-	char			**env_path;
-	char			**av;
-	char			*path;
+	struct dirent		*dirent;
+	DIR					*dir;
+	char				*path;
+	int					i;
 
-	av = ft_split_whitespaces(cmd);
-	env_path = ft_strsplit(env[i] + 5, ':');
 	path = NULL;
 	i = -1;
 	while (env_path[++i])
@@ -54,11 +51,21 @@ static void			support_exec_cmd(char **env, char *cmd, int i)
 		}
 		closedir(dir);
 	}
+	ft_strdel(&path);
+}
+
+static void				support_exec_cmd(char **env, char *cmd, int i)
+{
+	char			**env_path;
+	char			**av;
+
+	av = ft_split_whitespaces(cmd);
+	env_path = ft_strsplit(env[i] + 5, ':');
+	search_binary(env_path, av, env);
 	if (av[0] && av[0][0] != '.' && av[0][1] != '/')
 		command_not_found(av[0]);
 	else
 		error_exec(av[0]);
-	ft_strdel(&path);
 	free_env(av);
 	free_env(env_path);
 	exit(EXIT_FAILURE);
@@ -86,7 +93,7 @@ static void				change_shlvl(char ***env)
 	}
 }
 
-void				exec_command(char ***env, char *cmd)
+void					exec_command(char ***env, char *cmd)
 {
 	int			i;
 	struct stat	buf;
@@ -99,9 +106,11 @@ void				exec_command(char ***env, char *cmd)
 	if (pid == 0)
 	{
 		av = ft_split_whitespaces(cmd);
-		if (lstat(av[0], &buf) == 0 && (!(S_ISDIR(buf.st_mode)) && buf.st_mode & S_IXUSR))
+		if (lstat(av[0], &buf) == 0
+				&& (!(S_ISDIR(buf.st_mode)) && buf.st_mode & S_IXUSR))
 		{
-			if (av[0] && (!ft_strcmp(av[0], "minishell") || (ft_strchr(av[0], '/') && !ft_strcmp(ft_strrchr(av[0], '/') + 1, "minishell"))))
+			if (av[0] && (!ft_strcmp(av[0], "minishell") ||
+(ft_strchr(av[0], '/') && !ft_strcmp(ft_strrchr(av[0], '/') + 1, "minishell"))))
 				change_shlvl(env);
 			execve(av[0], av, *env);
 		}
@@ -111,20 +120,4 @@ void				exec_command(char ***env, char *cmd)
 			support_exec_cmd(*env, cmd, i);
 		free_env(av);
 	}
-}
-
-void				command_echo(char *cmd)
-{
-	char	**av;
-	int		i;
-
-	i = 0;
-	av = ft_split_whitespaces(cmd);
-	while (av && av[++i])
-	{
-		ft_putstr(av[i]);
-		if (av[i + 1])
-			ft_putchar(' ');
-	}
-	ft_putchar('\n');
 }

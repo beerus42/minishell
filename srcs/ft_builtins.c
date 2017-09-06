@@ -6,7 +6,7 @@
 /*   By: liton <livbrandon@outlook.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/01 01:43:44 by liton             #+#    #+#             */
-/*   Updated: 2017/09/06 04:43:48 by liton            ###   ########.fr       */
+/*   Updated: 2017/09/06 17:35:02 by liton            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,14 +32,10 @@ static void			command_setenv(char ***env, char *cmd)
 	p = 0;
 	av = ft_split_whitespaces(cmd);
 	new_env = NULL;
-	if (!*env || !av[1])
+	if (!*env || !av[1] || ft_strchr(av[1], '='))
 	{
-		free_env(av);
-		return ;
-	}
-	if ((av[1] && ft_strchr(av[1], '=')) || (av[2] && ft_strchr(av[2], '=')))
-	{
-		ft_putstr_fd("setenv: variable or value can't contain '='.\n", 2);
+		if (av[1] && ft_strchr(av[1], '='))
+			ft_putstr_fd("setenv: variable or value can't contain '='.\n", 2);
 		free_env(av);
 		return ;
 	}
@@ -56,7 +52,7 @@ static void			command_setenv(char ***env, char *cmd)
 	free_env(av);
 }
 
-static char		**del_v(char **env, int place)
+static char			**del_v(char **env, int place)
 {
 	char	**new_env;
 	int		i;
@@ -106,7 +102,7 @@ static void			command_unsetenv(char ***env, char *cmd)
 	*env = new_env;
 }
 
-void			ft_builtins(char ***env, char *cmd, char *builtins)
+void				ft_builtins(char ***env, char *cmd, char *builtins)
 {
 	if (!ft_strcmp(builtins, "env"))
 		command_env(*env, cmd, builtins);

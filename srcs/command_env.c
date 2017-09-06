@@ -6,7 +6,7 @@
 /*   By: liton <livbrandon@outlook.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/27 20:47:18 by liton             #+#    #+#             */
-/*   Updated: 2017/09/06 04:49:43 by liton            ###   ########.fr       */
+/*   Updated: 2017/09/06 17:16:59 by liton            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,8 +38,8 @@ static void			new_variable(char ***env, char **av, int *i)
 	}
 }
 
-static void		exec_env(char **av, char **new_cmd, int i, char **new_env)
-{	
+static void			exec_env(char **av, char **new_cmd, int i, char **new_env)
+{
 	if (av[i])
 	{
 		while (av[i])
@@ -53,7 +53,7 @@ static void		exec_env(char **av, char **new_cmd, int i, char **new_env)
 		ft_display_tab(new_env);
 }
 
-void			command_env(char **env, char *cmd, char *builtins)
+void				command_env(char **env, char *cmd, char *builtins)
 {
 	int		i;
 	char	**new_env;

@@ -6,7 +6,7 @@
 /*   By: liton <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/05 18:58:27 by liton             #+#    #+#             */
-/*   Updated: 2017/09/06 03:56:04 by liton            ###   ########.fr       */
+/*   Updated: 2017/09/06 18:47:05 by liton            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include "libft.h"
 #include <stdlib.h>
 
-int		ft_word(char *str)
+int				ft_word(char *str)
 {
 	int		i;
 	int		count;
@@ -57,7 +57,7 @@ static int		ft_strsubi(char *str, int start, int length, char **dest)
 	return (1);
 }
 
-void	ft_split(char *str, char ***tab)
+void			ft_split(char *str, char ***tab)
 {
 	int		i;
 	int		start;
@@ -84,7 +84,7 @@ void	ft_split(char *str, char ***tab)
 	(*tab)[k] = 0;
 }
 
-char	**ft_split_whitespaces(char *str)
+char			**ft_split_whitespaces(char *str)
 {
 	char	**tab;
 	int		i;
