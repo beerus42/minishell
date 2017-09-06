@@ -6,7 +6,7 @@
 /*   By: liton <livbrandon@outlook.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/04 20:05:12 by liton             #+#    #+#             */
-/*   Updated: 2017/09/06 19:17:24 by liton            ###   ########.fr       */
+/*   Updated: 2017/09/06 20:29:47 by liton            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 # define MINISHELL_H
 
 # include <unistd.h>
-# include <stdio.h>
 # include <stdlib.h>
 # include <sys/wait.h>
 # include <sys/types.h>
