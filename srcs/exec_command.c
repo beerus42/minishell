@@ -6,7 +6,7 @@
 /*   By: liton <livbrandon@outlook.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/27 08:31:05 by liton             #+#    #+#             */
-/*   Updated: 2017/09/06 17:50:20 by liton            ###   ########.fr       */
+/*   Updated: 2017/09/06 20:23:34 by liton            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ static void				search_binary(char **env_path, char **av, char **env)
 		dir = opendir(env_path[i]);
 		while ((dirent = readdir(dir)))
 		{
-			if (!ft_strcmp(dirent->d_name, av[0]))
+			if (!ft_strcmp(dirent->d_name, av[0]) && ft_strcmp(av[0], "."))
 			{
 				path = ft_strjoin(env_path[i], path);
 				path = ft_strjoinfree(path, "/", 1);
@@ -62,7 +62,8 @@ static void				support_exec_cmd(char **env, char *cmd, int i)
 	av = ft_split_whitespaces(cmd);
 	env_path = ft_strsplit(env[i] + 5, ':');
 	search_binary(env_path, av, env);
-	if (av[0] && av[0][0] != '.' && av[0][1] != '/')
+	if (av[0] && ((av[0][0] != '.' && av[0][1] != '/')
+		|| (av[0][0] == '.' && av[0][1] != '/')))
 		command_not_found(av[0]);
 	else
 		error_exec(av[0]);
@@ -71,7 +72,7 @@ static void				support_exec_cmd(char **env, char *cmd, int i)
 	exit(EXIT_FAILURE);
 }
 
-static void				change_shlvl(char ***env)
+void					change_shlvl(char ***env)
 {
 	char	*shlvl;
 	int		sh;
@@ -109,9 +110,7 @@ void					exec_command(char ***env, char *cmd)
 		if (lstat(av[0], &buf) == 0
 				&& (!(S_ISDIR(buf.st_mode)) && buf.st_mode & S_IXUSR))
 		{
-			if (av[0] && (!ft_strcmp(av[0], "minishell") ||
-(ft_strchr(av[0], '/') && !ft_strcmp(ft_strrchr(av[0], '/') + 1, "minishell"))))
-				change_shlvl(env);
+			split_exec_command(env, av[0]);
 			execve(av[0], av, *env);
 		}
 		else if ((i = search_v(*env, "PATH")) == -1)
@@ -119,5 +118,6 @@ void					exec_command(char ***env, char *cmd)
 		else
 			support_exec_cmd(*env, cmd, i);
 		free_env(av);
+		exit(EXIT_FAILURE);
 	}
 }

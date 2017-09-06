@@ -6,7 +6,7 @@
 /*   By: liton <livbrandon@outlook.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/04 19:56:19 by liton             #+#    #+#             */
-/*   Updated: 2017/09/06 18:46:27 by liton            ###   ########.fr       */
+/*   Updated: 2017/09/06 20:23:05 by liton            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,8 @@ static char				*read_cmd(void)
 		}
 		save = ft_strjoinfree(save, buf, 1);
 	}
+	if (ret == 0)
+		ft_putchar('\n');
 	return (save);
 }
 
@@ -105,14 +107,11 @@ int						main(int ac, char **av, char **envp)
 		if (builtins != NULL)
 		{
 			ft_builtins(&env, cmd, builtins);
-			ft_strdel(&cmd);
 			ft_strdel(&builtins);
 		}
 		else if (cmd && check_cmd(cmd) != -1)
-		{
 			exec_command(&env, cmd);
-			ft_strdel(&cmd);
-		}
+		ft_strdel(&cmd);
 	}
 	free_env(env);
 	return (0);

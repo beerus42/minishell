@@ -6,7 +6,7 @@
 /*   By: liton <livbrandon@outlook.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/27 20:03:45 by liton             #+#    #+#             */
-/*   Updated: 2017/09/06 17:28:52 by liton            ###   ########.fr       */
+/*   Updated: 2017/09/06 19:17:57 by liton            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,4 +64,11 @@ void			error_cd(char *path, char *av)
 		error_msg("cd: permission denied:", av);
 	else if (av && ft_strcmp(av, "-"))
 		error_msg("cd: no such file or directory:", av);
+}
+
+void			split_exec_command(char ***env, char *av)
+{
+	if (av && (!ft_strcmp(av, "minishell") ||
+(ft_strchr(av, '/') && !ft_strcmp(ft_strrchr(av, '/') + 1, "minishell"))))
+		change_shlvl(env);
 }

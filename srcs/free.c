@@ -6,7 +6,7 @@
 /*   By: liton <livbrandon@outlook.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/31 22:28:22 by liton             #+#    #+#             */
-/*   Updated: 2017/09/06 18:43:43 by liton            ###   ########.fr       */
+/*   Updated: 2017/09/06 19:48:29 by liton            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ void	command_echo(char *cmd)
 			ft_putchar(' ');
 	}
 	ft_putchar('\n');
+	free_env(av);
 }
 
 char	**strcpy_env(char **envp)
