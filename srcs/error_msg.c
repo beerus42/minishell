@@ -6,7 +6,7 @@
 /*   By: liton <livbrandon@outlook.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/27 20:03:45 by liton             #+#    #+#             */
-/*   Updated: 2017/09/01 23:05:01 by liton            ###   ########.fr       */
+/*   Updated: 2017/09/06 04:17:36 by liton            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ void			command_not_found(char *error)
 	while (error[i + 1] && error[i + 1] != ' ')
 		++i;
 	str = my_strcpy(i, error);
-	ft_putstr_fd("bash: ", 2);
+	ft_putstr_fd("minishell: ", 2);
 	ft_putstr_fd(str, 2);
 	ft_putstr_fd(": command not found\n", 2);
 }

@@ -6,7 +6,7 @@
 /*   By: liton <livbrandon@outlook.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/04 19:56:19 by liton             #+#    #+#             */
-/*   Updated: 2017/09/05 19:16:55 by liton            ###   ########.fr       */
+/*   Updated: 2017/09/06 03:29:35 by liton            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ static char			*parsing(char *cmd)
 	return (NULL);
 }
 
-static char			**strcpy_env(char **envp)
+char			**strcpy_env(char **envp)
 {
 	char	**env;
 	int		i;

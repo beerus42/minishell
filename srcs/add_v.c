@@ -6,7 +6,7 @@
 /*   By: liton <livbrandon@outlook.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/14 02:12:47 by liton             #+#    #+#             */
-/*   Updated: 2017/09/02 20:03:00 by liton            ###   ########.fr       */
+/*   Updated: 2017/09/06 04:41:32 by liton            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ static void		cpy_var(char **env, int i, char *variable, char *value)
 	env[i][j] = '\0';
 }
 
-char			**add_v(char **env, char *variable, char *value, int bol)
+char			**add_v(char **env, char *variable, char *value)
 {
 	int		i;
 	int		var;
@@ -81,7 +81,6 @@ char			**add_v(char **env, char *variable, char *value, int bol)
 		return (NULL);
 	cpy_var(new_env, i, variable, value);
 	new_env[i + 1] = NULL;
-	if (bol != 1)
-		free_env(env);
+	free_env(env);
 	return (new_env);
 }

@@ -6,7 +6,7 @@
 /*   By: liton <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/05 18:58:27 by liton             #+#    #+#             */
-/*   Updated: 2017/09/05 19:03:53 by liton            ###   ########.fr       */
+/*   Updated: 2017/09/06 03:56:04 by liton            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int		ft_word(char *str)
 	{
 		while (str[i] == ' ' || str[i] == '\t' || (str[i] == '\n' && str[i]))
 			i++;
-		if (str[i] != ' ' && str[i] != '\t' && str[i] != '\n')
+		if (str[i] && str[i] != ' ' && str[i] != '\t' && str[i] != '\n')
 		{
 			count++;
 			while (str[i] != '\t' && str[i] != '\n' && str[i] != ' ' && str[i])
@@ -72,7 +72,7 @@ void	ft_split(char *str, char ***tab)
 	{
 		while (str[i] == ' ' || str[i] == '\t' || str[i] == '\n')
 			i++;
-		if (str[i] != ' ' && str[i] != '\t' && str[i] != '\n')
+		if (str[i] && str[i] != ' ' && str[i] != '\t' && str[i] != '\n')
 		{
 			start = i;
 			while (str[i] != '\t' && str[i] != '\n' && str[i] != ' ' && str[i])

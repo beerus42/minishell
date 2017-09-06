@@ -6,7 +6,7 @@
 #    By: liton <marvin@42.fr>                       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/08/14 20:24:52 by liton             #+#    #+#              #
-#*   Updated: 2017/09/01 01:47:33 by liton            ###   ########.fr       *#
+#*   Updated: 2017/09/06 04:50:35 by liton            ###   ########.fr       *#
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,7 +20,7 @@ SRCDIR  = 	srcs/
 OBJDIR  = 	objs/
 SRC	=	add_v.c				\
 		binary_cd.c			\
-		command.c			\
+		command_env.c		\
 		error_msg.c     	\
 		ft_builtins.c       \
 		free.c				\

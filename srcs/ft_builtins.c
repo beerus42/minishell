@@ -6,7 +6,7 @@
 /*   By: liton <livbrandon@outlook.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/01 01:43:44 by liton             #+#    #+#             */
-/*   Updated: 2017/09/05 19:07:35 by liton            ###   ########.fr       */
+/*   Updated: 2017/09/06 04:43:48 by liton            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,9 +46,9 @@ static void			command_setenv(char ***env, char *cmd)
 	if ((p = search_v(*env, av[1])) == -1)
 	{
 		if (av[2])
-			new_env = add_v(*env, av[1], av[2], 0);
+			new_env = add_v(*env, av[1], av[2]);
 		else
-			new_env = add_v(*env, av[1], "", 0);
+			new_env = add_v(*env, av[1], "");
 		*env = new_env;
 	}
 	else if (av[2] && av[3] && ft_atoi(av[3]) != 0)

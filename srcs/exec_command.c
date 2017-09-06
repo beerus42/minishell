@@ -6,7 +6,7 @@
 /*   By: liton <livbrandon@outlook.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/27 08:31:05 by liton             #+#    #+#             */
-/*   Updated: 2017/09/05 19:06:05 by liton            ###   ########.fr       */
+/*   Updated: 2017/09/06 04:43:59 by liton            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,13 +17,13 @@ static void			error_exec(char *cmd)
 	struct stat		buf;
 	int				bol;
 
-	bol = stat(cmd, &buf);
+	bol = lstat(cmd, &buf);
 	if (bol == 0 && S_ISDIR(buf.st_mode))
-		error_msg("bash: is a directory:", cmd);	
+		error_msg("minishell: is a directory:", cmd);	
 	else if (bol == 0 && !(buf.st_mode & S_IXUSR))
-		error_msg("bash: persmission denied:", cmd);
+		error_msg("minishell: persmission denied:", cmd);
 	else if (bol == -1)
-		error_msg("bash: no such file or directory", cmd);
+		error_msg("minishell: no such file or directory", cmd);
 }
 
 static void			support_exec_cmd(char **env, char *cmd, int i)
@@ -73,7 +73,7 @@ static void				change_shlvl(char ***env)
 
 	if ((i = search_v(*env, "SHLVL")) == -1)
 	{
-		new = add_v(*env, "SHLVL", "1", 0);
+		new = add_v(*env, "SHLVL", "1");
 		*env = new;
 	}
 	else
@@ -98,7 +98,7 @@ void				exec_command(char ***env, char *cmd)
 		wait(NULL);
 	if (pid == 0)
 	{
-		av = ft_strsplit(cmd, ' ');
+		av = ft_split_whitespaces(cmd);
 		if (lstat(av[0], &buf) == 0 && (!(S_ISDIR(buf.st_mode)) && buf.st_mode & S_IXUSR))
 		{
 			if (av[0] && (!ft_strcmp(av[0], "minishell") || (ft_strchr(av[0], '/') && !ft_strcmp(ft_strrchr(av[0], '/') + 1, "minishell"))))
@@ -119,7 +119,7 @@ void				command_echo(char *cmd)
 	int		i;
 
 	i = 0;
-	av = ft_strsplit(cmd, ' ');
+	av = ft_split_whitespaces(cmd);
 	while (av && av[++i])
 	{
 		ft_putstr(av[i]);
