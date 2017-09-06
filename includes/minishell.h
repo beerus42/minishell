@@ -6,7 +6,7 @@
 /*   By: liton <livbrandon@outlook.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/04 20:05:12 by liton             #+#    #+#             */
-/*   Updated: 2017/09/06 20:29:47 by liton            ###   ########.fr       */
+/*   Updated: 2017/09/06 23:28:43 by liton            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,5 +41,6 @@ void			minishell(char **env);
 int				check_cmd(char *cmd);
 void			split_exec_command(char ***env, char *av);
 void			change_shlvl(char ***env);
+int				support_setenv(char **env, char ***av);
 
 #endif

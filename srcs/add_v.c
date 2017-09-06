@@ -6,11 +6,25 @@
 /*   By: liton <livbrandon@outlook.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/14 02:12:47 by liton             #+#    #+#             */
-/*   Updated: 2017/09/06 04:41:32 by liton            ###   ########.fr       */
+/*   Updated: 2017/09/06 23:32:36 by liton            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+int				support_setenv(char **env, char ***av)
+{
+	if (!env || !(*av)[1] || ft_strchr((*av)[1], '='))
+	{
+		if ((*av)[1] == NULL)
+			ft_display_tab(env);
+		else if ((*av)[1] && ft_strchr((*av)[1], '='))
+			ft_putstr_fd("setenv: variable or value can't contain '='.\n", 2);
+		free_env(*av);
+		return (-1);
+	}
+	return (0);
+}
 
 void			modify_v(char **env, int p, char *var, char *val)
 {
