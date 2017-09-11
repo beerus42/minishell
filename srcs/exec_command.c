@@ -6,7 +6,7 @@
 /*   By: liton <livbrandon@outlook.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/27 08:31:05 by liton             #+#    #+#             */
-/*   Updated: 2017/09/06 23:21:15 by liton            ###   ########.fr       */
+/*   Updated: 2017/09/11 15:44:22 by liton            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,8 @@ static void				search_binary(char **env_path, char **av, char **env)
 		dir = opendir(env_path[i]);
 		while ((dirent = readdir(dir)))
 		{
-			if (!ft_strcmp(dirent->d_name, av[0]) && ft_strcmp(av[0], "."))
+			if (!ft_strcmp(dirent->d_name, av[0]) && ft_strcmp(av[0], ".")
+				&& ft_strcmp(av[0], ".."))
 			{
 				path = ft_strjoin(env_path[i], path);
 				path = ft_strjoinfree(path, "/", 1);
